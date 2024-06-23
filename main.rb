@@ -1,6 +1,8 @@
 require "net/http"
 require "json"
 require "time"
+# require "gtk3"
+require "gst"
 
 # Constants
 API_URL = "https://api.example.com/cow_events"  # Replace with the actual API URL
@@ -63,10 +65,25 @@ def parse_event_data(event_data)
 end
 
 # Play the video for the specified duration
-def play_video(filename, duration)
+def play_video(pipeline, filename, duration)
   filepath = File.join(VIDEO_PATH, filename)
   if File.exist?(filepath)
-    system("ffplay", "-t", duration.to_s, "-autoexit", "-nodisp", filepath)
+    pipeline.set_state(:null)
+    pipeline.children.each { |child| pipeline.remove(child) }
+
+    source = Gst::ElementFactory.make("filesrc", "source")
+    source.location = filepath
+    decode = Gst::ElementFactory.make("decodebin", "decode")
+    sink = Gst::ElementFactory.make("autovideosink", "sink")
+
+    pipeline.add(source, decode, sink)
+    source.link(decode)
+    decode.signal_connect("pad-added") do |_, pad|
+      pad.link(sink.get_static_pad("sink"))
+    end
+
+    pipeline.set_state(:playing)
+    sleep(duration)
   else
     puts "Video file #{filename} not found."
   end
@@ -74,6 +91,9 @@ end
 
 # Main logic to handle event playback
 def handle_event_playback(events)
+  Gst.init
+  pipeline = Gst::Pipeline.new("video_pipeline")
+
   events.each_with_index do |current_event, i|
     if i < events.size - 1
       next_event = events[i + 1]
@@ -84,8 +104,10 @@ def handle_event_playback(events)
 
     video_filename = "#{current_event[:cow_name]}_#{current_event[:event]}.mp4"
     puts "Playing video: #{video_filename} for #{duration} seconds."
-    play_video(video_filename, duration)
+    play_video(pipeline, video_filename, duration)
   end
+
+  pipeline.set_state(:null)
 end
 
 if __FILE__ == $0
