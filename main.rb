@@ -1,7 +1,7 @@
 require "net/http"
 require "json"
 require "time"
-# require "gtk3"
+require "gtk3"
 require "gst"
 
 # Constants
