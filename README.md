@@ -3,8 +3,9 @@
 Waiting for Cows is an interactive storytelling project that explores the complex relationship between humans, animals and technology. Set on a Friesian farm, the main protagonists are Dutch dairy cows monitored by wearables, conditioned by algorithms and quantified in data.
 
 
+## Set up
 
-
+**Requirements**: A linux machine running gnome and gtk with gstreamer installed.
 
 ```sh
 bundle install
