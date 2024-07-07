@@ -21,3 +21,7 @@ mkdir videos
 #
 ruby main.rb
 ```
+
+## Development
+
+We use [standardrb](https://github.com/standardrb/standard) for code formatting and linting.

@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ast (2.4.2)
     atk (4.2.2)
       glib2 (= 4.2.2)
     cairo (1.17.13)
@@ -31,15 +32,57 @@ GEM
       atk (= 4.2.2)
       gdk3 (= 4.2.2)
     json (2.7.2)
+    language_server-protocol (3.17.0.3)
+    lint_roller (1.1.0)
     matrix (0.4.2)
     native-package-installer (1.1.9)
     pango (4.2.2)
       cairo-gobject (= 4.2.2)
       gobject-introspection (= 4.2.2)
+    parallel (1.25.1)
+    parser (3.3.3.0)
+      ast (~> 2.4.1)
+      racc
     pkg-config (1.5.6)
+    racc (1.8.0)
+    rainbow (3.1.1)
     red-colors (0.4.0)
       json
       matrix
+    regexp_parser (2.9.2)
+    rexml (3.3.1)
+      strscan
+    rubocop (1.64.1)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.3.0.2)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.31.3)
+      parser (>= 3.3.1.0)
+    rubocop-performance (1.21.1)
+      rubocop (>= 1.48.1, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
+    ruby-progressbar (1.13.0)
+    standard (1.39.1)
+      language_server-protocol (~> 3.17.0.2)
+      lint_roller (~> 1.0)
+      rubocop (~> 1.64.0)
+      standard-custom (~> 1.0.0)
+      standard-performance (~> 1.4)
+    standard-custom (1.0.2)
+      lint_roller (~> 1.0)
+      rubocop (~> 1.50)
+    standard-performance (1.4.0)
+      lint_roller (~> 1.1)
+      rubocop-performance (~> 1.21.0)
+    strscan (3.1.0)
+    unicode-display_width (2.5.0)
 
 PLATFORMS
   ruby
@@ -48,6 +91,7 @@ PLATFORMS
 DEPENDENCIES
   gstreamer (~> 4.2)
   gtk3 (~> 4.2)
+  standard (~> 1.39)
 
 BUNDLED WITH
    2.5.6
