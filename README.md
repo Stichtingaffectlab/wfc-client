@@ -22,6 +22,8 @@ mkdir videos
 ruby main.rb
 ```
 
+![image](https://github.com/user-attachments/assets/5c50de25-92c7-4466-bfc3-362c109e3e1a)
+
 ## Development
 
 We use [standardrb](https://github.com/standardrb/standard) for code formatting and linting.
