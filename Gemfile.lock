@@ -4,6 +4,7 @@ GEM
     ast (2.4.2)
     atk (4.2.2)
       glib2 (= 4.2.2)
+    bigdecimal (3.1.8)
     cairo (1.17.13)
       native-package-installer (>= 1.0.3)
       pkg-config (>= 1.2.2)
@@ -11,6 +12,7 @@ GEM
     cairo-gobject (4.2.2)
       cairo (>= 1.16.2)
       glib2 (= 4.2.2)
+    csv (3.3.0)
     fiddle (1.1.2)
     gdk3 (4.2.2)
       cairo-gobject (= 4.2.2)
@@ -31,10 +33,17 @@ GEM
     gtk3 (4.2.2)
       atk (= 4.2.2)
       gdk3 (= 4.2.2)
+    httparty (0.22.0)
+      csv
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
     matrix (0.4.2)
+    mini_mime (1.1.5)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
     native-package-installer (1.1.9)
     pango (4.2.2)
       cairo-gobject (= 4.2.2)
@@ -91,6 +100,7 @@ PLATFORMS
 DEPENDENCIES
   gstreamer (~> 4.2)
   gtk3 (~> 4.2)
+  httparty (~> 0.22.0)
   standard (~> 1.39)
 
 BUNDLED WITH
