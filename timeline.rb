@@ -19,13 +19,11 @@ class Timeline
   base_uri "localhost:3000"
 
   attr_reader :rumination_events, :milking_events, :farm_schedule, :farm_overrides, :cows
-  attr_reader :current
 
   def initialize
-    @current = {}
     fetch_cows
     renew
-    @base_timeline = build_base_timeline
+    build_base_timeline
   end
 
   def renew
@@ -37,17 +35,14 @@ class Timeline
 
   def build_base_timeline
     @last_built_at = Time.now
-    PRE_SELECTED[0].map do |s|
+    @base_timeline = PRE_SELECTED[0].map do |s|
       {event: s[1], timestamp: Time.now + s[0].minutes, cow: "cow" + s[2].to_s}
     end
   end
 
   def get_current
     # it's been 2h sicne we last built the timeline, so build it
-    if @last_built_at < 2.hours.ago
-      @base_timeline = build_base_timeline
-    end
-
+    build_base_timeline if @last_built_at < 2.hours.ago
     # Look for any scheduled events at this time
     scheduled = @farm_schedule.find do |ev|
       t = ev["outside_at"] || ev["inside_at"] || ev["eats_at"]
@@ -55,9 +50,7 @@ class Timeline
     end
 
     # See if there are any new overridden events
-    if @last_overrides_check < 5.minutes.ago
-      fetch_overrides
-    end
+    fetch_overrides if @last_overrides_check < 5.minutes.ago
     # get any live events added by the farmer
     overrides = @farm_overrides.select do |ev|
       five_min_ago = truncate_to_minute(Time.now - 5.minutes)
@@ -66,9 +59,7 @@ class Timeline
     end
 
     # See if there are any new milkings
-    if @last_milk_check < 5.minutes.ago
-      fetch_milking
-    end
+    fetch_milking if @last_milk_check < 5.minutes.ago
     # get milking events
     milkings = @milking_events.select do |ev|
       five_min_ago = truncate_to_minute(Time.now - 5.minutes)
@@ -85,9 +76,7 @@ class Timeline
       queue += overrides
     end
 
-    unless scheduled.empty?
-      queue += scheduled
-    end
+    queue.push(scheduled) if scheduled
 
     # if everything is empty then return the @base_timeline
     if queue.empty?
@@ -162,7 +151,7 @@ puts "-----"
 puts t.farm_overrides
 puts "-----"
 puts "-----"
-puts t.build
+# puts t.build
 puts "-----"
 puts "-----"
 puts t.get_current
