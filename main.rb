@@ -7,9 +7,8 @@ require "gtk3"
 require "gst"
 
 class EventWatcher
-  API_URL = "https://api.example.com/cow_events" # Replace with the actual API URL
   VIDEO_PATH = "./videos" # Directory where video files are stored
-  CHECK_INTERVAL = 10 # seconds
+  CHECK_INTERVAL = 4 # seconds
 
   def initialize(events)
     @events = parse_event_data(events)
@@ -52,7 +51,7 @@ class EventWatcher
   end
 
   def handle_event_playback(current_event)
-    video_filename = "#{current_event[:cow_name]}_#{current_event[:event]}.mp4"
+    video_filename = "#{current_event[:cow]}_#{current_event[:event]}.mp4"
     puts "Playing video: #{video_filename}"
     play_video(video_filename)
   end
@@ -60,9 +59,12 @@ class EventWatcher
   def start_watching
     loop do
       if Time.now - @last_checked >= CHECK_INTERVAL
-        current_event = fetch_event
-        @pipeline.set_state(:null)
-        handle_event_playback(current_event) if current_event
+        ev = fetch_event
+        if @current_event != ev
+          @current_event = ev
+          @pipeline.set_state(:null)
+          handle_event_playback(@current_event) if @current_event
+        end
         @last_checked = Time.now
       end
       sleep(CHECK_INTERVAL + 1)
@@ -72,12 +74,13 @@ end
 
 # Sample Events
 EVENTS = [
-  {event: "milking", cow_id: 1, cow_name: "cow1", timestamp: "2024-06-08 12:22:18"},
-  {event: "rumination", cow_id: 2, cow_name: "cow2", timestamp: "2024-06-08 12:22:28"},
-  {event: "grazing", cow_id: 3, cow_name: "cow3", timestamp: "2024-06-08 12:22:38"},
-  {event: "milking", cow_id: 2, cow_name: "cow2", timestamp: "2024-06-08 12:22:48"},
-  {event: "grazing", cow_id: 1, cow_name: "cow2", timestamp: "2024-06-08 12:22:58"},
-  {event: "rumination", cow_id: 3, cow_name: "cow3", timestamp: "2024-06-08 12:23:08"}
+  {event: "milking", cow_id: 1, cow: "cow1", event_location: "inside", timestamp: "2024-06-08 12:22:18"},
+  {event: "milking", cow_id: 1, cow: "cow1", event_location: "inside", timestamp: "2024-06-08 12:22:18"},
+  {event: "rumination", cow_id: 2, cow: "cow2", event_location: "inside", timestamp: "2024-06-08 12:22:28"},
+  {event: "grazing", cow_id: 3, cow: "cow3", event_location: "outside", timestamp: "2024-06-08 12:22:38"},
+  {event: "milking", cow_id: 2, cow: "cow2", event_location: "inside", timestamp: "2024-06-08 12:22:48"},
+  {event: "grazing", cow_id: 1, cow: "cow2", event_location: "outside", timestamp: "2024-06-08 12:22:58"},
+  {event: "rumination", cow_id: 3, cow: "cow3", event_location: "outside", timestamp: "2024-06-08 12:23:08"}
 ].freeze
 
 if __FILE__ == $0
