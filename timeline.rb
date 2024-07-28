@@ -91,7 +91,9 @@ class Timeline
 
     # if everything is empty then return the @base_timeline
     if queue.empty?
-      # scroll to the event which should now be happening by using @last_built_at
+      # @todo scroll to the event which should now be happening by using @last_built_at
+    else
+      # @todo return the queue elements until they are empty
     end
   end
 
