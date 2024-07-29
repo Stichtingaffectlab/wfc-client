@@ -59,7 +59,7 @@ class Timeline
 
       current_event
     elsif @last_queued_at < 5.minutes.ago
-      # return the queue elements until they are empty
+      # return the last queued element
       @last_queued_event = @queue.shift # check for time when it was last shifted and play it until a certain time
       @last_queued_at = Time.current
       @last_queued_event
