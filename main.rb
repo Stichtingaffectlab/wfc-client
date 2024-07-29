@@ -5,12 +5,14 @@ require "json"
 require "time"
 require "gtk3"
 require "gst"
+require "./timeline"
 
 class EventWatcher
   VIDEO_PATH = "./videos" # Directory where video files are stored
   CHECK_INTERVAL = 4 # seconds
 
   def initialize(events)
+    @tl = Timeline.new
     @events = parse_event_data(events)
     @last_checked = Time.now - CHECK_INTERVAL - 1
     Gst.init
@@ -23,6 +25,7 @@ class EventWatcher
   end
 
   def fetch_event
+    puts @tl.get_current
     @events.shift
   end
 
