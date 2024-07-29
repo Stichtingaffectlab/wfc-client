@@ -44,6 +44,8 @@ class Timeline
   end
 
   def get_current
+    enqueue
+
     # if everything is empty then return the current event from base timeline
     if @queue.empty?
       current_time = truncate_to_minute(Time.current)
@@ -55,10 +57,10 @@ class Timeline
       end
 
       # if no current_event was found then build the timeline
-      build_base_timeline && enqueue unless current_event
+      build_base_timeline unless current_event
 
       current_event
-    elsif @last_queued_at < 5.minutes.ago
+    elsif !@last_queued_at || @last_queued_at < 5.minutes.ago
       # return the last queued element
       @last_queued_event = @queue.shift # check for time when it was last shifted and play it until a certain time
       @last_queued_at = Time.current
@@ -86,6 +88,7 @@ class Timeline
     overrides = @farm_overrides.select do |ev|
       five_min_ago = truncate_to_minute(Time.current - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
+      # Here we only try to get events that were found 5 minutes ago, not older than that
       event_time >= five_min_ago && event_time <= Time.current
     end
 
