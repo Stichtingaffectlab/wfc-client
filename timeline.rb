@@ -66,6 +66,7 @@ class Timeline
       @last_queued_at = Time.current
       @last_queued_event
     else
+      @last_queued_event = @queue.shift
       @last_queued_event
     end
   end
@@ -102,11 +103,11 @@ class Timeline
     end
 
     unless milkings.empty?
-      @queue += milkings
+      @queue = (@queue + milkings).uniq { |item| item["id"] }
     end
 
     unless overrides.empty?
-      @queue += overrides
+      @queue = (@queue + overrides).uniq { |item| item["id"] }
     end
 
     @queue.push(scheduled) if scheduled
@@ -175,7 +176,7 @@ end
 # puts t.farm_overrides
 # puts "-----"
 # puts "-----"
-# puts t.build
+# # puts t.build
 # puts "-----"
 # puts "-----"
 # puts t.get_current
