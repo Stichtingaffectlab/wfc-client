@@ -7,6 +7,16 @@ require "gtk3"
 require "gst"
 require "./timeline"
 
+#
+# @todos
+# - play video according to event
+#   - if no new event, keep playing the same video
+# - x include scheduled event in the queue
+#   - keep a default for the amount of time scheduled event plays
+#   - if no scheduled event for the day, use last one
+# - add few more presets for distributing the timeline between two hours
+#
+
 class EventWatcher
   VIDEO_PATH = "./videos" # Directory where video files are stored
   CHECK_INTERVAL = 4 # seconds
@@ -65,8 +75,10 @@ class EventWatcher
         ev = fetch_event
         if @current_event != ev
           @current_event = ev
-          @pipeline.set_state(:null)
-          handle_event_playback(@current_event) if @current_event
+          if @current_event
+            @pipeline.set_state(:null)
+            handle_event_playback(@current_event)
+          end
         end
         @last_checked = Time.now
       end

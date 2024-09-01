@@ -46,7 +46,10 @@ class Timeline
   def get_current
     enqueue
 
-    # if everything is empty then return the current event from base timeline
+    # @todo check the farm schedule to send event_location with the current_event.
+    # Note that the scheduled event is already queued and is played for a minute.
+    #
+    # If everything is empty then return the current event from base timeline.
     if @queue.empty?
       current_time = truncate_to_minute(Time.current)
       current_event = @base_timeline.select do |event|
