@@ -86,6 +86,8 @@ class Timeline
       # These are merely indicators for event_location. However, eats_at can be used for eating event
       # if there's a video for it
       t = ev["outside_at"] || ev["inside_at"] || ev["eats_at"]
+      # @todo make sure this comparison considers a few more minutes in order to play the event for more than a mniute
+      # or use some other mechanism (OR that it's not enqueued every time this mentod is called)
       truncate_to_minute(Time.parse(t)) == truncate_to_minute(Time.current)
     end
 
