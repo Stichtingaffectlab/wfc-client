@@ -82,6 +82,9 @@ class Timeline
 
     # Look for any scheduled events at this time
     scheduled = @farm_schedule.find do |ev|
+      # @todo outside_at and inside_at are not necessary here because we don't have videos for these
+      # These are merely indicators for event_location. However, eats_at can be used for eating event
+      # if there's a video for it
       t = ev["outside_at"] || ev["inside_at"] || ev["eats_at"]
       truncate_to_minute(Time.parse(t)) == truncate_to_minute(Time.current)
     end
