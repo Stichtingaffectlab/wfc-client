@@ -83,7 +83,7 @@ class Timeline
   private
 
   def enqueue
-    @last_queued_at = Time.current
+    @last_queued_at = Time.current if !@last_queued_at
 
     # Look for any scheduled events at this time
     scheduled = @farm_schedule.find do |ev|
@@ -91,20 +91,20 @@ class Timeline
       # These are merely indicators for event_location. However, eats_at can be used for eating event
       # if there's a video for it
       t = ev["outside_at"] || ev["inside_at"] || ev["eats_at"]
-      # @todo make sure this comparison considers a few more minutes in order to play the event for more than a mniute
-      # or use some other mechanism (OR that it's not enqueued every time this mentod is called)
-      #   truncate_to_minute(Time.parse(t)) < 2.minutes.ago
-      truncate_to_minute(Time.parse(t)) == truncate_to_minute(Time.current)
+
+      event_time = truncate_to_minute(Time.parse(t))
+      truncate_to_minute(Time.current).between?(event_time, event_time + 2.minutes)
     end
 
     # See if there are any new overridden events
     fetch_overrides # if @last_overrides_check < 5.minutes.ago
     # get any live events added by the farmer
     overrides = @farm_overrides.select do |ev|
-      five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
+      # five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
       # Here we only try to get events that were found 5 minutes ago, not older than that
-      event_time >= five_min_ago && event_time <= @last_queued_at
+      # event_time >= five_min_ago && event_time <= @last_queued_at
+      event_time.between?(@last_queued_at - 5.minutes, @last_queued_at) && @all.none? { x["id"] == ev["id"] }
     end
 
     # @todo this should check for the milking duration (and play the video for that duration)
@@ -112,9 +112,10 @@ class Timeline
     fetch_milking # if @last_milk_check < 5.minutes.ago
     # get milking events
     milkings = @milking_events.select do |ev|
-      five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
+      # five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
-      event_time >= five_min_ago && event_time <= @last_queued_at
+      # event_time >= five_min_ago && event_time <= @last_queued_at
+      event_time.between?(@last_queued_at - 5.minutes, @last_queued_at)
     end
 
     unless milkings.empty?
@@ -126,6 +127,12 @@ class Timeline
     end
 
     @queue.push(scheduled) if scheduled
+
+    @last_queued_at = Time.current
+
+    puts "-----------------------------------------"
+    puts @queue.inspect
+    puts "-----------------------------------------"
   end
 
   # here we get
