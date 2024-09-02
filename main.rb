@@ -11,6 +11,7 @@ require "./timeline"
 # @todos
 # - play video according to event
 #   - if no new event, keep playing the same video
+# - for milking event, play the video for that duration
 # - x include scheduled event in the queue
 #   - keep a default for the amount of time scheduled event plays
 #   - if no scheduled event for the day, use last one

@@ -23,6 +23,7 @@ class Timeline
   def initialize
     @queue = []
     @base_timeline = []
+    @all = []
 
     fetch_cows
     renew
@@ -44,7 +45,9 @@ class Timeline
   end
 
   def get_current
-    enqueue
+    if !@last_queued_at || @last_queued_at < 5.minutes.ago || @queue.empty?
+      enqueue
+    end
 
     # @todo check the farm schedule to send event_location with the current_event.
     # Note that the scheduled event is already queued and is played for a minute.
@@ -63,20 +66,22 @@ class Timeline
       build_base_timeline unless current_event
 
       current_event
-    elsif !@last_queued_at || @last_queued_at < 5.minutes.ago
-      # return the last queued element
-      @last_queued_event = @queue.shift # check for time when it was last shifted and play it until a certain time
-      @last_queued_at = Time.current
-      @last_queued_event
+    elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) <= 5.minutes.ago # @todo use duration for milkings and defaults for the other
+      # empty the queue
+      @last_popped_at = Time.current
+      last = @queue.shift
+      @all.push(last)
+      @queue.first
     else
-      @last_queued_event = @queue.shift
-      @last_queued_event
+      @queue.first
     end
   end
 
   private
 
   def enqueue
+    @last_queued_at = Time.current
+
     # it's been 2h sicne we last built the timeline, so build it
     build_base_timeline if @last_built_at < 2.hours.ago
 
@@ -96,19 +101,20 @@ class Timeline
     fetch_overrides # if @last_overrides_check < 5.minutes.ago
     # get any live events added by the farmer
     overrides = @farm_overrides.select do |ev|
-      five_min_ago = truncate_to_minute(Time.current - 5.minutes)
+      five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
       # Here we only try to get events that were found 5 minutes ago, not older than that
-      event_time >= five_min_ago && event_time <= Time.current
+      event_time >= five_min_ago && event_time <= @last_queued_at
     end
 
+    # @todo this should check for the milking duration (and play the video for that duration)
     # See if there are any new milkings
     fetch_milking # if @last_milk_check < 5.minutes.ago
     # get milking events
     milkings = @milking_events.select do |ev|
-      five_min_ago = truncate_to_minute(Time.current - 5.minutes)
+      five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
-      event_time >= five_min_ago && event_time <= Time.current
+      event_time >= five_min_ago && event_time <= @last_queued_at
     end
 
     unless milkings.empty?
