@@ -49,6 +49,9 @@ class Timeline
       enqueue
     end
 
+    # if it's been 2h sicne we last built the base timeline
+    build_base_timeline if @last_built_at < 2.hours.ago
+
     # @todo check the farm schedule to send event_location with the current_event.
     # Note that the scheduled event is already queued and is played for a minute.
     #
@@ -81,9 +84,6 @@ class Timeline
 
   def enqueue
     @last_queued_at = Time.current
-
-    # it's been 2h sicne we last built the timeline, so build it
-    build_base_timeline if @last_built_at < 2.hours.ago
 
     # Look for any scheduled events at this time
     scheduled = @farm_schedule.find do |ev|
