@@ -93,18 +93,15 @@ class Timeline
       t = ev["outside_at"] || ev["inside_at"] || ev["eats_at"]
 
       event_time = truncate_to_minute(Time.parse(t))
-      truncate_to_minute(Time.current).between?(event_time, event_time + 2.minutes)
+      event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
     end
 
     # See if there are any new overridden events
     fetch_overrides # if @last_overrides_check < 5.minutes.ago
     # get any live events added by the farmer
     overrides = @farm_overrides.select do |ev|
-      # five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
-      # Here we only try to get events that were found 5 minutes ago, not older than that
-      # event_time >= five_min_ago && event_time <= @last_queued_at
-      event_time.between?(@last_queued_at - 5.minutes, @last_queued_at) && @all.none? { x["id"] == ev["id"] }
+      event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
     end
 
     # @todo this should check for the milking duration (and play the video for that duration)
@@ -112,27 +109,32 @@ class Timeline
     fetch_milking # if @last_milk_check < 5.minutes.ago
     # get milking events
     milkings = @milking_events.select do |ev|
-      # five_min_ago = truncate_to_minute(@last_queued_at - 5.minutes)
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
-      # event_time >= five_min_ago && event_time <= @last_queued_at
-      event_time.between?(@last_queued_at - 5.minutes, @last_queued_at)
+      event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
     end
 
     unless milkings.empty?
-      @queue = (@queue + milkings).uniq { |item| item["id"] }
+      @queue = (@queue + milkings.reverse).uniq { |item| item["id"] }
     end
 
     unless overrides.empty?
-      @queue = (@queue + overrides).uniq { |item| item["id"] }
+      @queue = (@queue + overrides.reverse).uniq { |item| item["id"] }
     end
 
     @queue.push(scheduled) if scheduled
 
+    # remove any events that have been already played
+    @queue = @queue.reject do |obj1|
+      @all.any? { |obj2| obj1["id"] == obj2["id"] }
+    end
+
     @last_queued_at = Time.current
 
-    puts "-----------------------------------------"
-    puts @queue.inspect
-    puts "-----------------------------------------"
+    # if @queue.length > 0
+    #   puts "-----------------------------------------"
+    #   puts @queue.map { |x| x["id"] }.inspect
+    #   puts "-----------------------------------------"
+    # end
   end
 
   # here we get
