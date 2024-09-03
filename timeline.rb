@@ -6,8 +6,6 @@ PRE_SELECTED = [
   [[0, :resting, 1], [18, :ruminations, 2], [39, :ruminations, 1], [62, :resting, 3], [85, :ruminations, 3], [103, :resting, 2]]
 ]
 
-DEFAULT_EVENT_LOCATION = "inside"
-
 # Creates a timeline of events to be displayed. This class takes care of mixing and prioritizing
 # different farm events mixed with lely apis and finally create a timeline of data as it happens in
 # realtime.
@@ -69,7 +67,7 @@ class Timeline
       build_base_timeline unless current_event
 
       current_event
-    elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) <= 5.minutes.ago # @todo use duration for milkings and defaults for the other
+    elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) <= event_duration.minutes.ago
       # empty the queue
       @last_popped_at = Time.current
       last = @queue.shift
@@ -81,6 +79,17 @@ class Timeline
   end
 
   private
+
+  # Amount of duration a event needs to be played
+  def event_duration
+    # @todo add more cases for grazing, eating, scheduled event etc
+    case @queue.first["event"]
+    when "milking"
+      @queue.first["duration"]
+    else
+      1
+    end
+  end
 
   def enqueue
     @last_queued_at = Time.current if !@last_queued_at
