@@ -43,7 +43,8 @@ class Timeline
     @base_timeline = @rumination_events.reduce([]) do |s, r|
       s << {
         event: :ruminations,
-        timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : r["duration"].minutes),
+        duration: r["duration"].zero? ? 40 : r["duration"],
+        timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : s.last[:duration].minutes),
         cow: "cow" + r["life_number"]
       }
     end
@@ -75,7 +76,7 @@ class Timeline
       build_base_timeline unless current_event
 
       return current_event
-    elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) <= event_duration.minutes.ago
+    elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) < event_duration.minutes.ago
       # empty the queue
       @last_popped_at = Time.current
       last = @queue.shift
