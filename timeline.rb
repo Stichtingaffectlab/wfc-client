@@ -6,6 +6,8 @@ PRE_SELECTED = [
   [[0, :resting, 1], [18, :ruminations, 2], [39, :ruminations, 1], [62, :resting, 3], [85, :ruminations, 3], [103, :resting, 2]]
 ]
 
+DEFAULT_EVENT_LOCATION = "inside"
+
 # Creates a timeline of events to be displayed. This class takes care of mixing and prioritizing
 # different farm events mixed with lely apis and finally create a timeline of data as it happens in
 # realtime.
@@ -16,12 +18,14 @@ class Timeline
   # base_uri "wfc-backend.fly.dev" # for production
   base_uri "localhost:3000"
 
-  attr_reader :rumination_events, :milking_events, :farm_schedule, :farm_overrides, :cows
+  attr_reader :rumination_events, :milking_events, :farm_schedule, :farm_overrides, :cows, :event_location
 
   def initialize
     @queue = []
     @base_timeline = []
     @all = []
+    @event_location = DEFAULT_EVENT_LOCATION
+    @event_location_set_at = Time.current
 
     fetch_cows
     renew
@@ -50,6 +54,9 @@ class Timeline
     # if it's been 2h sicne we last built the base timeline
     build_base_timeline if @last_built_at < 2.hours.ago
 
+    # change event_location to "inside" if not already changed by the event
+    set_inside if @event_location_set_at < 2.minutes.ago
+
     # @todo check the farm schedule to send event_location with the current_event.
     # Note that the scheduled event is already queued and is played for a minute.
     #
@@ -66,16 +73,22 @@ class Timeline
       # if no current_event was found then build the timeline
       build_base_timeline unless current_event
 
-      current_event
+      return current_event
     elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) <= event_duration.minutes.ago
       # empty the queue
       @last_popped_at = Time.current
       last = @queue.shift
       @all.push(last)
-      @queue.first
-    else
-      @queue.first
     end
+
+    # When there is no event, then it's the seeting of event_location "inside" or "outside"
+    # We store them for future use.
+    if @queue.first && (!@queue.first["event"] || @queue.first["event_location"])
+      @event_location = @queue.first["event_location"]
+      @event_location_set_at = Time.current
+    end
+
+    @queue.first
   end
 
   private
@@ -87,7 +100,7 @@ class Timeline
     when "milking"
       @queue.first["duration"]
     else
-      1
+      5
     end
   end
 
@@ -189,6 +202,10 @@ class Timeline
 
   def fetch_cows
     @cows = self.class.get("/api/cows")
+  end
+
+  def set_inside
+    @event_location = "inside"
   end
 end
 
