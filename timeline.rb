@@ -54,15 +54,13 @@ class Timeline
       enqueue
     end
 
-    # if it's been 2h sicne we last built the base timeline
+    # build base timeline if it's been some time ago
     build_base_timeline if @last_built_at <= @base_timeline_duration.minutes.ago
 
     # change event_location to "inside" if not already changed by the event
+    # @todo change 2 minutes to desirable time
     set_inside if @event_location_set_at < 2.minutes.ago
 
-    # @todo check the farm schedule to send event_location with the current_event.
-    # Note that the scheduled event is already queued and is played for a minute.
-    #
     # If everything is empty then return the current event from base timeline.
     if @queue.empty?
       current_time = truncate_to_minute(Time.current)
