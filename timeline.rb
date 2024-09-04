@@ -119,7 +119,7 @@ class Timeline
     end
 
     # See if there are any new overridden events
-    fetch_overrides # if @last_overrides_check < 5.minutes.ago
+    fetch_overrides
     # get any live events added by the farmer
     overrides = @farm_overrides.select do |ev|
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
@@ -128,7 +128,7 @@ class Timeline
 
     # @todo this should check for the milking duration (and play the video for that duration)
     # See if there are any new milkings
-    fetch_milking # if @last_milk_check < 5.minutes.ago
+    fetch_milking
     # get milking events
     milkings = @milking_events.select do |ev|
       event_time = truncate_to_minute(Time.parse(ev["created_at"]))
@@ -187,7 +187,6 @@ class Timeline
   #
   def fetch_overrides
     @farm_overrides = self.class.get("/api/farm_events")
-    @last_overrides_check = Time.current
   end
 
   # here we get
@@ -197,7 +196,6 @@ class Timeline
   #
   def fetch_milking
     @milking_events = self.class.get("/api/cow_events?event=milking")
-    @last_milk_check = Time.current
   end
 
   def fetch_cows
