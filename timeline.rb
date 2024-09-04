@@ -2,10 +2,6 @@ require "net/http"
 require "httparty"
 require "active_support/all"
 
-PRE_SELECTED = [
-  [[0, :resting, 1], [18, :ruminations, 2], [39, :ruminations, 1], [62, :resting, 3], [85, :ruminations, 3], [103, :resting, 2]]
-]
-
 DEFAULT_EVENT_LOCATION = "inside"
 
 # Creates a timeline of events to be displayed. This class takes care of mixing and prioritizing
@@ -41,8 +37,15 @@ class Timeline
 
   def build_base_timeline
     @last_built_at = Time.current
-    @base_timeline = PRE_SELECTED[0].map do |s|
-      {event: s[1], timestamp: Time.current + s[0].minutes, cow: "cow" + s[2].to_s}
+
+    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + ((e["duration"] == 0) ? 40 : e["duration"]) }
+
+    @base_timeline = @rumination_events.reduce([]) do |s, r|
+      s << {
+        event: :ruminations,
+        timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : r["duration"].minutes),
+        cow: "cow" + r["life_number"]
+      }
     end
   end
 
@@ -52,7 +55,7 @@ class Timeline
     end
 
     # if it's been 2h sicne we last built the base timeline
-    build_base_timeline if @last_built_at < 2.hours.ago
+    build_base_timeline if @last_built_at <= @base_timeline_duration.minutes.ago
 
     # change event_location to "inside" if not already changed by the event
     set_inside if @event_location_set_at < 2.minutes.ago
