@@ -45,7 +45,7 @@ class Timeline
         event: :ruminations,
         duration: r["duration"].zero? ? 40 : r["duration"],
         timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : s.last[:duration].minutes),
-        cow: "cow" + r["life_number"]
+        cow: r["cow"]
       }
     end
   end
@@ -59,6 +59,7 @@ class Timeline
     build_base_timeline if @last_built_at <= @base_timeline_duration.minutes.ago
 
     # change event_location to "inside" if not already changed by the event
+    # tip: perhaps consider toggling?
     # @todo change 2 minutes to desirable time
     set_inside if @event_location_set_at < 2.minutes.ago
 
@@ -109,6 +110,7 @@ class Timeline
   def enqueue
     @last_queued_at = Time.current if !@last_queued_at
 
+    fetch_schedule
     # Look for any scheduled events at this time
     scheduled = @farm_schedule.find do |ev|
       # @todo outside_at and inside_at are not necessary here because we don't have videos for these
