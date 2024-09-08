@@ -5,7 +5,14 @@ Waiting for Cows is an interactive storytelling project that explores the comple
 
 ## Set up
 
-**Requirements**: A linux machine running gnome and gtk with gstreamer installed.
+**Requirements**: A linux machine with mpv installed
+
+```sh
+sudo apt install mpv # for debian based distros
+sudo dnf install mpv # for red had based
+```.
+
+And then
 
 ```sh
 bundle install
@@ -13,16 +20,28 @@ mkdir videos
 # copy videos of the cows in this directory
 # make sure the videos are named like this:
 #
-#   cow1_grazing.mp4
-#   cow1_milking.mp4
-#   cow1_rumination.mp4
+#   235_grazing_inside.mp4
+#   235_grazing_outside.mp4
+#   235_milking_inside.mp4
+#   235_milking_outside.mp4
+#   235_ruminations_inside.mp4
+#   235_ruminations_outside.mp4
 #
 # same for the other cows
 #
+
+# run the mpv player in background
+mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mp4 &
 ruby main.rb
 ```
 
-![image](https://github.com/user-attachments/assets/5c50de25-92c7-4466-bfc3-362c109e3e1a)
+The correct name of the events in the filename must be
+
+- ruminations
+- milking
+- eating
+- grazing
+- resting
 
 ## Development
 
