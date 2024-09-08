@@ -61,6 +61,7 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.24.1)
+    mpv (3.0.1)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
     mutex_m (0.2.0)
@@ -126,6 +127,7 @@ DEPENDENCIES
   gstreamer (~> 4.2)
   gtk3 (~> 4.2)
   httparty (~> 0.22.0)
+  mpv (~> 3.0)
   rtmidi (~> 0.3)
   standard (~> 1.39)
 
