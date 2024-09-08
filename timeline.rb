@@ -1,4 +1,3 @@
-require "net/http"
 require "httparty"
 require "active_support/all"
 
@@ -26,28 +25,6 @@ class Timeline
     fetch_cows
     renew
     build_base_timeline
-  end
-
-  def renew
-    fetch_ruminations
-    fetch_schedule
-    fetch_overrides
-    fetch_milking
-  end
-
-  def build_base_timeline
-    @last_built_at = Time.current
-
-    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + ((e["duration"] == 0) ? 40 : e["duration"]) }
-
-    @base_timeline = @rumination_events.reduce([]) do |s, r|
-      s << {
-        event: :ruminations,
-        duration: r["duration"].zero? ? 40 : r["duration"],
-        timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : s.last[:duration].minutes),
-        cow: r["cow"]
-      }
-    end
   end
 
   def get_current
@@ -155,12 +132,28 @@ class Timeline
     end
 
     @last_queued_at = Time.current
+  end
 
-    # if @queue.length > 0
-    #   puts "-----------------------------------------"
-    #   puts @queue.map { |x| x["id"] }.inspect
-    #   puts "-----------------------------------------"
-    # end
+  def renew
+    fetch_ruminations
+    fetch_schedule
+    fetch_overrides
+    fetch_milking
+  end
+
+  def build_base_timeline
+    @last_built_at = Time.current
+
+    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + ((e["duration"] == 0) ? 40 : e["duration"]) }
+
+    @base_timeline = @rumination_events.reduce([]) do |s, r|
+      s << {
+        event: :ruminations,
+        duration: r["duration"].zero? ? 40 : r["duration"],
+        timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : s.last[:duration].minutes),
+        cow: r["cow"]
+      }
+    end
   end
 
   # here we get
@@ -214,21 +207,3 @@ end
 def truncate_to_minute(time)
   time.change(sec: 0, usec: 0)
 end
-
-# t = Timeline.new
-# puts t.rumination_events
-# puts "-----"
-# puts "-----"
-# puts t.milking_events
-# puts "-----"
-# puts "-----"
-# puts t.farm_schedule
-# puts "-----"
-# puts "-----"
-# puts t.farm_overrides
-# puts "-----"
-# puts "-----"
-# # puts t.build
-# puts "-----"
-# puts "-----"
-# puts t.get_current
