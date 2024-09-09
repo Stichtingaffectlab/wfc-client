@@ -31,19 +31,45 @@ class EventWatcher
 
     puts "Playing video: #{filename}"
 
+    # loop playlist for milking videos
+    if filepath.include? "milking"
+      send_command({"command" => ["set_property", "loop", "no"]})
+      send_command({"command" => ["set_property", "loop-playlist", "inf"]})
+    else
+      send_command({"command" => ["set_property", "loop", "yes"]})
+    end
+
     # Send command to play video
     send_command({"command" => ["loadfile", filepath]})
   end
 
   def handle_event_playback(ev)
+    video_filename = if get_event(ev) == "milking"
+      "#{get_cow(ev)}_milking.m3u" # for milking event we use a playlist to include intro and outro
+    else
+      "#{get_cow(ev)}_#{get_event(ev)}_#{@tl.event_location}.mp4"
+    end
     @previous_event = ev
-    video_filename = "#{get_cow(ev)}_#{ev[:event] || ev["event"]}_#{@tl.event_location}.mp4"
     play_video(video_filename)
   end
 
   def get_cow(ev)
     cow = ev[:cow] || ev["cow"]
-    (cow && (cow[:name] || cow["name"])).split(" ").first
+    cow = @previous_event[:cow] || @previous_event["cow"] if !cow
+    (cow[:name] || cow["name"]).split(" ").first
+  end
+
+  # we don't have videos for resting and grazing, instead for these we simply show alternatives
+  def get_event(ev)
+    event_name = ev[:event] || ev["event"]
+    case event_name
+    when "grazing"
+      "eating"
+    when "resting"
+      "ruminations"
+    else
+      event_name
+    end
   end
 
   def start_watching
@@ -51,7 +77,7 @@ class EventWatcher
       if Time.now - @last_checked >= CHECK_INTERVAL
         ev = fetch_event
         puts ev
-        if @current_event != ev
+        if @current_event != ev && ev
           @current_event = ev
           if @current_event && (@current_event[:event] || @current_event["event"])
             handle_event_playback(@current_event)
@@ -59,7 +85,7 @@ class EventWatcher
             handle_event_playback(@previous_event)
           end
         end
-        @last_checked = Time.now
+        @last_checked = Time.now if ev
       end
       sleep(CHECK_INTERVAL + 1)
     end
