@@ -14,19 +14,18 @@ midiout.port_names.each_with_index { |name, index| printf "%3i: %s\n", index, na
 
 midiout.open_port(1)
 
-# first led strip
+# second
+midiout.send_channel_message(0xb0, 30, 20)
+midiout.send_channel_message(0xb0, 25, 108)
+midiout.send_channel_message(0xb0, 24, 18)
+
+# third
+midiout.send_channel_message(0xb0, 50, 20)
+midiout.send_channel_message(0xb0, 50, 20)
+midiout.send_channel_message(0xb0, 45, 108)
+midiout.send_channel_message(0xb0, 44, 18)
+
+# first
 midiout.send_channel_message(0xb0, 10, 20)
-midiout.send_channel_message(0xb0, 1, 1)
-midiout.send_channel_message(0xb0, 5, 127)
-midiout.send_channel_message(0xb0, 4, 107)
-
-# second led strip
-midiout.send_channel_message(0xb0, 30, 60)
-
-# for pitch in [60, 62, 64, 65, 67]
-#   midiout.send_channel_message(0x90, pitch, 127)
-#   sleep 0.5
-#   midiout.send_channel_message(0x90, pitch, 0) # note off
-# end
-
-sleep 0.5 # give the final note off time to release
+midiout.send_channel_message(0xb0, 5, 108)
+midiout.send_channel_message(0xb0, 4, 18)

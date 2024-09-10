@@ -10,8 +10,8 @@ DEFAULT_EVENT_LOCATION = "inside"
 class Timeline
   include HTTParty
 
-  # base_uri "wfc-backend.fly.dev" # for production
-  base_uri "localhost:3000"
+  base_uri "wfc-backend.fly.dev" # for production
+  # base_uri "localhost:3000"
 
   attr_reader :rumination_events, :milking_events, :farm_schedule, :farm_overrides, :cows, :event_location
 
