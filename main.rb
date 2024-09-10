@@ -78,8 +78,15 @@ class EventWatcher
     end
     @previous_event = ev
     play_video(video_filename)
+
+    # control led strips
+    # first turn all of and then turn on one for the current cow
     turn_all_off
     send(:"cow_#{get_cow(ev)}")
+    Thread.new do
+      sleep 60 * 3 # wait for 3 minutes and turn off the led strips
+      turn_all_off
+    end
   end
 
   def get_cow(ev)
