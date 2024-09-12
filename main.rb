@@ -11,8 +11,8 @@ class EventWatcher
   def initialize
     @tl = Timeline.new
     @last_checked = Time.now - CHECK_INTERVAL - 1
-    @midiout = RtMidi::Out.new
-    @midiout.open_port(1)
+    # @midiout = RtMidi::Out.new
+    # @midiout.open_port(1)
   end
 
   def turn_all_off
@@ -81,12 +81,12 @@ class EventWatcher
 
     # control led strips
     # first turn all of and then turn on one for the current cow
-    turn_all_off
-    send(:"cow_#{get_cow(ev)}")
-    Thread.new do
-      sleep 60 * 3 # wait for 3 minutes and turn off the led strips
-      turn_all_off
-    end
+    # turn_all_off
+    # send(:"cow_#{get_cow(ev)}")
+    # Thread.new do
+    #   sleep 60 * 3 # wait for 3 minutes and turn off the led strips
+    #   turn_all_off
+    # end
   end
 
   def get_cow(ev)
