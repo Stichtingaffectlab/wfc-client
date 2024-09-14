@@ -1,6 +1,5 @@
 require "socket"
 require "json"
-require "rtmidi"
 require "./timeline"
 
 class EventWatcher
@@ -11,32 +10,7 @@ class EventWatcher
   def initialize
     @tl = Timeline.new
     @last_checked = Time.now - CHECK_INTERVAL - 1
-    # @midiout = RtMidi::Out.new
-    # @midiout.open_port(1)
-  end
-
-  def turn_all_off
-    @midiout.send_channel_message(0xb0, 30, 0)
-    @midiout.send_channel_message(0xb0, 50, 0)
-    @midiout.send_channel_message(0xb0, 10, 0)
-  end
-
-  def cow_235
-    @midiout.send_channel_message(0xb0, 30, 20)
-    @midiout.send_channel_message(0xb0, 25, 108)
-    @midiout.send_channel_message(0xb0, 24, 18)
-  end
-
-  def cow_468
-    @midiout.send_channel_message(0xb0, 50, 20)
-    @midiout.send_channel_message(0xb0, 45, 108)
-    @midiout.send_channel_message(0xb0, 44, 18)
-  end
-
-  def cow_507
-    @midiout.send_channel_message(0xb0, 10, 20)
-    @midiout.send_channel_message(0xb0, 5, 108)
-    @midiout.send_channel_message(0xb0, 4, 18)
+    # @led = LedController.new
   end
 
   def fetch_event
@@ -81,11 +55,11 @@ class EventWatcher
 
     # control led strips
     # first turn all of and then turn on one for the current cow
-    # turn_all_off
-    # send(:"cow_#{get_cow(ev)}")
+    # @led.turn_all_off
+    # @led.send(:"cow_#{get_cow(ev)}")
     # Thread.new do
     #   sleep 60 * 3 # wait for 3 minutes and turn off the led strips
-    #   turn_all_off
+    #   @led.turn_all_off
     # end
   end
 
