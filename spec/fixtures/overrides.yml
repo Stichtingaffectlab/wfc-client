@@ -1,0 +1,19 @@
+- id: 42
+  date: '2024-09-23'
+  outside_at: null
+  inside_at: null
+  eats_at: '2024-09-23T13:00:26.876+02:00'
+  grazes_at: null
+  rests_at: null
+  ruminates_at: null
+  kind: override
+  cow_id: NL 671905073
+  created_at: '2024-09-23T13:00:26.876+02:00'
+  updated_at: '2024-09-23T13:00:26.876+02:00'
+  event_location: inside
+  event: eating
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'

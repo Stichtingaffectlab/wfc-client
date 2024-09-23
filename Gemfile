@@ -12,3 +12,5 @@ gem "activesupport", "~> 7.1"
 gem "rtmidi", "~> 0.3"
 
 gem "mpv", "~> 3.0"
+
+gem "rspec", "~> 3.13"

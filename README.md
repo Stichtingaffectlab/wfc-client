@@ -46,3 +46,11 @@ The correct name of the events in the filename must be
 ## Development
 
 We use [standardrb](https://github.com/standardrb/standard) for code formatting and linting.
+
+## Testing
+
+We have rspec tests that uses timecop gem to check for the queuing of events and how the timeline is built. To run the tests
+
+```
+rspec .
+```
