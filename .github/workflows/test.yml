@@ -21,7 +21,7 @@ jobs:
         restore-keys: ${{runner.os}}-gems-
 
     - name: Install necessary packages
-      run: sudo apt-get install -y alsa-lib
+      run: sudo apt-get install -y libasound2
 
     - name: Bundle install
       run: |
