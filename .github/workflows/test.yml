@@ -20,6 +20,9 @@ jobs:
         key: ${{runner.os}}-gems-${{hashFiles('**/Gemfile.lock')}}
         restore-keys: ${{runner.os}}-gems-
 
+    - name: Install necessary packages
+      run: sudo apt-get install -y alsa-lib
+
     - name: Bundle install
       run: |
         gem install bundler
