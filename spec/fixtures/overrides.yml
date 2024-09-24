@@ -29,5 +29,5 @@
   cow_id: null
   created_at: '2024-09-24T09:25:44.822+02:00'
   updated_at: '2024-09-24T09:25:44.822+02:00'
-  event_location: inside
+  event_location: outside
   event: resting

@@ -43,7 +43,7 @@ schedule:
     event: eating
   - id: 43
     date: '2024-09-24'
-    outside_at: '2024-09-24T09:30:00.000+02:00'
+    outside_at: '2024-09-24T07:51:00.000+02:00'
     inside_at: null
     eats_at: null
     grazes_at: null
