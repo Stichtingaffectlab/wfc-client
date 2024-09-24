@@ -61,14 +61,14 @@ class Timeline
       @all.push(last)
     end
 
-    # When there is no event, then it's the seeting of event_location "inside" or "outside"
+    # When there is no event, then it's the setting of event_location "inside" or "outside"
     # We store them for future use.
     if @queue.first && (!@queue.first["event"] || @queue.first["event_location"])
       @event_location = @queue.first["event_location"]
       @event_location_set_at = Time.current
     end
 
-    @queue.first
+    @queue.first || get_current
   end
 
   private
