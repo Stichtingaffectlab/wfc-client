@@ -42,4 +42,8 @@ describe Timeline do
   it "follows three cows" do
     expect(cows.length).to be 3
   end
+
+  it "has event_location set to inside" do
+    expect(subject.event_location).to eq("inside")
+  end
 end
