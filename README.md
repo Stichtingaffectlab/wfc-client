@@ -12,7 +12,7 @@ Waiting for Cows is an interactive storytelling project that explores the comple
 ```sh
 sudo apt install mpv # for debian based distros
 sudo dnf install mpv # for red had based
-```.
+```
 
 And then
 
