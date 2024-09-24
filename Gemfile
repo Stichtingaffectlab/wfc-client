@@ -23,5 +23,9 @@ group :development do
 end
 
 group :test do
+  # testing framework
   gem "rspec", "~> 3.13"
+
+  # for time travelling and testing the timeline
+  gem "timecop", "~> 0.9.10"
 end
