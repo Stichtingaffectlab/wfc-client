@@ -1,175 +1,3 @@
-- id: 1018
-  event: milking
-  data:
-    Weight: 694
-    MilkSpeed: 2.802030456852792
-    MilkYield: 9.2
-    LFMilkTime: 181
-    LRMilkTime: 182
-    LifeNumber: NL 671905073
-    RFMilkTime: 197
-    RRMilkTime: 171
-    LFXPosition: 88
-    LFYPosition: 865
-    LRXPosition: 55
-    LRYPosition: 1007
-    LRZPosition: 539
-    LfzPosition: 515
-    MilkingDate: '2024-09-23T10:43:26'
-    RFXPosition: -98
-    RFYPosition: 886
-    RFZPosition: 504
-    RRXPosition: -60
-    RRYPosition: 1003
-    RRZPosition: 550
-    BottleNumber: 0
-    MilkSpeedMax: 3.3
-    DeviceAddress: 101
-    LFDeadMilkTime: 12
-    LRDeadMilkTime: 13
-    RFDeadMilkTime: 16
-    RRDeadMilkTime: 10
-    SuccessMilking: true
-    MilkingStartDate: '2024-09-23T10:38:21'
-  event_date: '2024-09-23T10:38:21.000+02:00'
-  life_number: NL 671905073
-  created_at: '2024-09-23T10:50:10.378+02:00'
-  updated_at: '2024-09-23T10:50:10.378+02:00'
-  duration: 5
-  cow:
-    name: 507 Robina
-    life_number: NL 671905073
-    created_at: '2024-07-15T09:16:55.896+02:00'
-    updated_at: '2024-07-27T13:10:32.060+02:00'
-- id: 1000
-  event: milking
-  data:
-    Weight: 493
-    MilkSpeed: 3.024193548387097
-    MilkYield: 12.5
-    LFMilkTime: 177
-    LRMilkTime: 214
-    LifeNumber: NL 657402358
-    RFMilkTime: 171
-    RRMilkTime: 248
-    LFXPosition: 84
-    LFYPosition: 810
-    LRXPosition: 81
-    LRYPosition: 953
-    LRZPosition: 433
-    LfzPosition: 440
-    MilkingDate: '2024-09-23T07:05:54'
-    RFXPosition: -74
-    RFYPosition: 797
-    RFZPosition: 407
-    RRXPosition: -31
-    RRYPosition: 949
-    RRZPosition: 415
-    BottleNumber: 0
-    MilkSpeedMax: 4
-    DeviceAddress: 102
-    LFDeadMilkTime: 13
-    LRDeadMilkTime: 13
-    RFDeadMilkTime: 16
-    RRDeadMilkTime: 11
-    SuccessMilking: true
-    MilkingStartDate: '2024-09-23T06:58:35'
-  event_date: '2024-09-23T06:58:35.000+02:00'
-  life_number: NL 657402358
-  created_at: '2024-09-23T10:12:02.811+02:00'
-  updated_at: '2024-09-23T10:12:02.811+02:00'
-  duration: 7
-  cow:
-    name: 235 Margo
-    life_number: NL 657402358
-    created_at: '2024-07-15T09:16:39.527+02:00'
-    updated_at: '2024-07-27T13:10:43.213+02:00'
-- id: 1001
-  event: milking
-  data:
-    Weight: 642
-    MilkSpeed: 1.487603305785124
-    MilkYield: 9
-    LFMilkTime: 193
-    LRMilkTime: 363
-    LifeNumber: NL 671904683
-    RFMilkTime: 208
-    RRMilkTime: 286
-    LFXPosition: 55
-    LFYPosition: 810
-    LRXPosition: 34
-    LRYPosition: 947
-    LRZPosition: 503
-    LfzPosition: 546
-    MilkingDate: '2024-09-23T05:48:00'
-    RFXPosition: -101
-    RFYPosition: 816
-    RFZPosition: 546
-    RRXPosition: -51
-    RRYPosition: 945
-    RRZPosition: 500
-    BottleNumber: 0
-    MilkSpeedMax: 2.5
-    DeviceAddress: 102
-    LFDeadMilkTime: 22
-    LRDeadMilkTime: 27
-    RFDeadMilkTime: 24
-    RRDeadMilkTime: 17
-    SuccessMilking: true
-    MilkingStartDate: '2024-09-23T05:39:48'
-  event_date: '2024-09-23T05:39:48.000+02:00'
-  life_number: NL 671904683
-  created_at: '2024-09-23T10:12:04.676+02:00'
-  updated_at: '2024-09-23T10:12:04.676+02:00'
-  duration: 8
-  cow:
-    name: 468 Argentina
-    life_number: NL 671904683
-    created_at: '2024-07-15T09:16:15.454+02:00'
-    updated_at: '2024-07-27T13:10:51.800+02:00'
-- id: 1002
-  event: milking
-  data:
-    Weight: 672
-    MilkSpeed: 2.793103448275862
-    MilkYield: 8.1
-    LFMilkTime: 138
-    LRMilkTime: 150
-    LifeNumber: NL 671905073
-    RFMilkTime: 174
-    RRMilkTime: 153
-    LFXPosition: 91
-    LFYPosition: 864
-    LRXPosition: 57
-    LRYPosition: 1007
-    LRZPosition: 537
-    LfzPosition: 516
-    MilkingDate: '2024-09-23T03:57:12'
-    RFXPosition: -96
-    RFYPosition: 884
-    RFZPosition: 503
-    RRXPosition: -58
-    RRYPosition: 1002
-    RRZPosition: 549
-    BottleNumber: 0
-    MilkSpeedMax: 3.6
-    DeviceAddress: 101
-    LFDeadMilkTime: 12
-    LRDeadMilkTime: 10
-    RFDeadMilkTime: 14
-    RRDeadMilkTime: 11
-    SuccessMilking: true
-    MilkingStartDate: '2024-09-23T03:51:22'
-  event_date: '2024-09-23T03:51:22.000+02:00'
-  life_number: NL 671905073
-  created_at: '2024-09-23T10:12:07.272+02:00'
-  updated_at: '2024-09-23T10:12:07.272+02:00'
-  duration: 5
-  cow:
-    name: 507 Robina
-    life_number: NL 671905073
-    created_at: '2024-07-15T09:16:55.896+02:00'
-    updated_at: '2024-07-27T13:10:32.060+02:00'
 - id: 1051
   event: milking
   data:
@@ -471,3 +299,175 @@
     life_number: NL 657402358
     created_at: '2024-07-15T09:16:39.527+02:00'
     updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1018
+  event: milking
+  data:
+    Weight: 694
+    MilkSpeed: 2.802030456852792
+    MilkYield: 9.2
+    LFMilkTime: 181
+    LRMilkTime: 182
+    LifeNumber: NL 671905073
+    RFMilkTime: 197
+    RRMilkTime: 171
+    LFXPosition: 88
+    LFYPosition: 865
+    LRXPosition: 55
+    LRYPosition: 1007
+    LRZPosition: 539
+    LfzPosition: 515
+    MilkingDate: '2024-09-23T10:43:26'
+    RFXPosition: -98
+    RFYPosition: 886
+    RFZPosition: 504
+    RRXPosition: -60
+    RRYPosition: 1003
+    RRZPosition: 550
+    BottleNumber: 0
+    MilkSpeedMax: 3.3
+    DeviceAddress: 101
+    LFDeadMilkTime: 12
+    LRDeadMilkTime: 13
+    RFDeadMilkTime: 16
+    RRDeadMilkTime: 10
+    SuccessMilking: true
+    MilkingStartDate: '2024-09-23T10:38:21'
+  event_date: '2024-09-23T10:38:21.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-23T10:50:10.378+02:00'
+  updated_at: '2024-09-23T10:50:10.378+02:00'
+  duration: 5
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1000
+  event: milking
+  data:
+    Weight: 493
+    MilkSpeed: 3.024193548387097
+    MilkYield: 12.5
+    LFMilkTime: 177
+    LRMilkTime: 214
+    LifeNumber: NL 657402358
+    RFMilkTime: 171
+    RRMilkTime: 248
+    LFXPosition: 84
+    LFYPosition: 810
+    LRXPosition: 81
+    LRYPosition: 953
+    LRZPosition: 433
+    LfzPosition: 440
+    MilkingDate: '2024-09-23T07:05:54'
+    RFXPosition: -74
+    RFYPosition: 797
+    RFZPosition: 407
+    RRXPosition: -31
+    RRYPosition: 949
+    RRZPosition: 415
+    BottleNumber: 0
+    MilkSpeedMax: 4
+    DeviceAddress: 102
+    LFDeadMilkTime: 13
+    LRDeadMilkTime: 13
+    RFDeadMilkTime: 16
+    RRDeadMilkTime: 11
+    SuccessMilking: true
+    MilkingStartDate: '2024-09-23T06:58:35'
+  event_date: '2024-09-23T06:58:35.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-23T10:12:02.811+02:00'
+  updated_at: '2024-09-23T10:12:02.811+02:00'
+  duration: 7
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1001
+  event: milking
+  data:
+    Weight: 642
+    MilkSpeed: 1.487603305785124
+    MilkYield: 9
+    LFMilkTime: 193
+    LRMilkTime: 363
+    LifeNumber: NL 671904683
+    RFMilkTime: 208
+    RRMilkTime: 286
+    LFXPosition: 55
+    LFYPosition: 810
+    LRXPosition: 34
+    LRYPosition: 947
+    LRZPosition: 503
+    LfzPosition: 546
+    MilkingDate: '2024-09-23T05:48:00'
+    RFXPosition: -101
+    RFYPosition: 816
+    RFZPosition: 546
+    RRXPosition: -51
+    RRYPosition: 945
+    RRZPosition: 500
+    BottleNumber: 0
+    MilkSpeedMax: 2.5
+    DeviceAddress: 102
+    LFDeadMilkTime: 22
+    LRDeadMilkTime: 27
+    RFDeadMilkTime: 24
+    RRDeadMilkTime: 17
+    SuccessMilking: true
+    MilkingStartDate: '2024-09-23T05:39:48'
+  event_date: '2024-09-23T05:39:48.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-23T10:12:04.676+02:00'
+  updated_at: '2024-09-23T10:12:04.676+02:00'
+  duration: 8
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1002
+  event: milking
+  data:
+    Weight: 672
+    MilkSpeed: 2.793103448275862
+    MilkYield: 8.1
+    LFMilkTime: 138
+    LRMilkTime: 150
+    LifeNumber: NL 671905073
+    RFMilkTime: 174
+    RRMilkTime: 153
+    LFXPosition: 91
+    LFYPosition: 864
+    LRXPosition: 57
+    LRYPosition: 1007
+    LRZPosition: 537
+    LfzPosition: 516
+    MilkingDate: '2024-09-23T03:57:12'
+    RFXPosition: -96
+    RFYPosition: 884
+    RFZPosition: 503
+    RRXPosition: -58
+    RRYPosition: 1002
+    RRZPosition: 549
+    BottleNumber: 0
+    MilkSpeedMax: 3.6
+    DeviceAddress: 101
+    LFDeadMilkTime: 12
+    LRDeadMilkTime: 10
+    RFDeadMilkTime: 14
+    RRDeadMilkTime: 11
+    SuccessMilking: true
+    MilkingStartDate: '2024-09-23T03:51:22'
+  event_date: '2024-09-23T03:51:22.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-23T10:12:07.272+02:00'
+  updated_at: '2024-09-23T10:12:07.272+02:00'
+  duration: 5
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
