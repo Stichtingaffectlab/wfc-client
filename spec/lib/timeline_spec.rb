@@ -3,8 +3,6 @@ require_relative "../spec_helper"
 require "yaml"
 require "timecop"
 
-Time.zone = "Amsterdam"
-
 describe Timeline do
   let(:cows) { load_fixture("cows.yml") }
   let(:schedule) { load_fixture("schedule.yml") }
