@@ -74,12 +74,15 @@ describe Timeline do
         # travel to the moment where we can test
         t = Time.local(2024, 9, 24, 7, 48, 10)
         Timecop.travel(t)
+        puts Time.now
 
         # Initially we should receive the rumination event
         # from base timeline
         #
         expect(subject.get_current).to have_key(:event)
         expect(subject.get_current[:event]).to eq(:ruminations)
+
+        puts subject.get_current
 
         # travel to the minute milking starts
         # It should be milking now as we truncate to the minute
