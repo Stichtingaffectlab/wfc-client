@@ -65,12 +65,12 @@ describe Timeline do
       it "returns the last rumination event" do
         expect(subject.get_current).to have_key(:event)
         expect(subject.get_current).to have_key(:duration)
-        expect(subject.get_current[:event]).to eq(:ruminations)
+        expect(subject.get_current[:event]).to eq("ruminations")
       end
     end
 
     context "when multiple events happen at the same time, they are put in queue" do
-      it "fetches rumination event" do
+      it "retrieves events in an order" do
         # travel to the moment where we can test
         t = Time.local(2024, 9, 24, 7, 48, 10)
         Timecop.travel(t)
@@ -79,30 +79,30 @@ describe Timeline do
         # from base timeline
         #
         expect(subject.get_current).to have_key(:event)
-        expect(subject.get_current[:event]).to eq(:ruminations)
+        expect(subject.get_current[:event]).to eq("ruminations")
 
         # travel to the minute milking starts
         # It should be milking now as we truncate to the minute
         #
         Timecop.travel(t + 2.minutes) # go 2 minutes ahead
-        expect(subject.get_current["event"]).to eq("milking")
+        expect(subject.get_current[:event]).to eq("milking")
 
         # the milking duration is for 6 minutes, so check if it is still milking
         # after 5 minutes
         #
         Timecop.travel(t + 5.minutes) # go 5 minutes ahead
-        expect(subject.get_current["event"]).to eq("milking")
+        expect(subject.get_current[:event]).to eq("milking")
 
         # go past 6 minutes, now the milking event
         # should be over and we should start the scheduled event
         #
         Timecop.travel(t + 8.minutes) # go 8 minutes ahead
-        expect(subject.get_current["event"]).to be_nil
+        expect(subject.get_current[:event]).to be_nil
         expect(subject.event_location).to eq("outside")
 
         # after 5 minutes, the event_location should change to inside
         Timecop.travel(t + 14.minutes)
-        expect(subject.get_current[:event]).to eq(:ruminations)
+        expect(subject.get_current[:event]).to eq("ruminations")
         expect(subject.event_location).to eq("inside")
       end
     end

@@ -54,7 +54,7 @@ class Timeline
       build_base_timeline unless current_event
 
       return current_event
-    elsif (@last_popped_at || Time.parse(@queue.first["created_at"])) < event_duration.minutes.ago
+    elsif (@last_popped_at || Time.parse(@queue.first[:created_at])) < event_duration.minutes.ago
       # empty the queue
       @last_popped_at = Time.current
       last = @queue.shift
@@ -63,8 +63,8 @@ class Timeline
 
     # When there is no event, then it's the setting of event_location "inside" or "outside"
     # We store them for future use.
-    if @queue.first && (!@queue.first["event"] || @queue.first["event_location"])
-      @event_location = @queue.first["event_location"]
+    if @queue.first && (!@queue.first[:event] || @queue.first[:event_location])
+      @event_location = @queue.first[:event_location]
       @event_location_set_at = Time.current
     end
 
@@ -76,9 +76,9 @@ class Timeline
   # Amount of duration a event needs to be played
   def event_duration
     # @todo add more cases for grazing, eating, scheduled event etc
-    case @queue.first["event"]
-    when "milking"
-      @queue.first["duration"]
+    case @queue.first[:event]
+    when :milking
+      @queue.first[:duration]
     else
       5
     end
@@ -93,7 +93,7 @@ class Timeline
       # @todo outside_at and inside_at are not necessary here because we don't have videos for these
       # These are merely indicators for event_location. However, eats_at can be used for eating event
       # if there's a video for it
-      t = ev["outside_at"] || ev["inside_at"] || ev["eats_at"]
+      t = ev[:outside_at] || ev[:inside_at] || ev[:eats_at]
 
       event_time = truncate_to_minute(Time.parse(t))
       event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
@@ -103,7 +103,7 @@ class Timeline
     fetch_overrides
     # get any live events added by the farmer
     overrides = @farm_overrides.select do |ev|
-      event_time = truncate_to_minute(Time.parse(ev["created_at"]))
+      event_time = truncate_to_minute(Time.parse(ev[:created_at]))
       event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
     end
 
@@ -112,23 +112,23 @@ class Timeline
     fetch_milking
     # get milking events
     milkings = @milking_events.select do |ev|
-      event_time = truncate_to_minute(Time.parse(ev["created_at"]))
+      event_time = truncate_to_minute(Time.parse(ev[:created_at]))
       event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
     end
 
     unless milkings.empty?
-      @queue = (@queue + milkings.reverse).uniq { |item| item["id"] }
+      @queue = (@queue + milkings.reverse).uniq { |item| item[:id] }
     end
 
     unless overrides.empty?
-      @queue = (@queue + overrides.reverse).uniq { |item| item["id"] }
+      @queue = (@queue + overrides.reverse).uniq { |item| item[:id] }
     end
 
     @queue.push(scheduled) if scheduled
 
     # remove any events that have been already played
     @queue = @queue.reject do |obj1|
-      @all.any? { |obj2| obj1["id"] == obj2["id"] }
+      @all.any? { |obj2| obj1[:id] == obj2[:id] }
     end
 
     @last_queued_at = Time.current
@@ -144,14 +144,14 @@ class Timeline
   def build_base_timeline
     @last_built_at = Time.current
 
-    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + ((e["duration"] == 0) ? 40 : e["duration"]) }
+    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + ((e[:duration] == 0) ? 40 : e[:duration]) }
 
     @base_timeline = @rumination_events.reduce([]) do |s, r|
       s << {
-        event: :ruminations,
-        duration: r["duration"].zero? ? 40 : r["duration"],
+        event: "ruminations",
+        duration: r[:duration].zero? ? 40 : r[:duration],
         timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : s.last[:duration].minutes),
-        cow: r["cow"]
+        cow: r[:cow]
       }
     end
   end
@@ -164,7 +164,7 @@ class Timeline
   # We create a base timeline with resting and ruminations.
   #
   def fetch_ruminations
-    @rumination_events = self.class.get("/api/cow_events?event=ruminations").slice(0, @cows.length)
+    @rumination_events = self.class.get("/api/cow_events?event=ruminations").slice(0, @cows.length).map(&:deep_symbolize_keys)
   end
 
   # here we get
@@ -173,7 +173,7 @@ class Timeline
   # The base timeline can be overridden by the schedule
   #
   def fetch_schedule
-    @farm_schedule = self.class.get("/api/farm_schedule")["schedule"]
+    @farm_schedule = self.class.get("/api/farm_schedule")["schedule"].map(&:deep_symbolize_keys)
   end
 
   # here we get
@@ -183,7 +183,7 @@ class Timeline
   # The base timeline and the schedule can be overridden by the farm events
   #
   def fetch_overrides
-    @farm_overrides = self.class.get("/api/farm_events")
+    @farm_overrides = self.class.get("/api/farm_events").map(&:deep_symbolize_keys)
   end
 
   # here we get
@@ -192,11 +192,11 @@ class Timeline
   # This event has the highest precedence. Whenever we get this event, it must be displayed.
   #
   def fetch_milking
-    @milking_events = self.class.get("/api/cow_events?event=milking")
+    @milking_events = self.class.get("/api/cow_events?event=milking").map(&:deep_symbolize_keys)
   end
 
   def fetch_cows
-    @cows = self.class.get("/api/cows")
+    @cows = self.class.get("/api/cows").map(&:deep_symbolize_keys)
   end
 
   def set_inside

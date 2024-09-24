@@ -64,21 +64,20 @@ class EventWatcher
   end
 
   def get_cow(ev)
-    cow = ev[:cow] || ev["cow"]
-    cow = @previous_event[:cow] || @previous_event["cow"] if !cow
-    (cow[:name] || cow["name"]).split(" ").first
+    cow = ev[:cow]
+    cow = @previous_event[:cow] if !cow
+    cow[:name].split(" ").first
   end
 
   # we don't have videos for resting and grazing, instead for these we simply show alternatives
   def get_event(ev)
-    event_name = ev[:event] || ev["event"]
-    case event_name
+    case ev[:event]
     when "grazing"
       "eating"
     when "resting"
       "ruminations"
     else
-      event_name
+      ev[:event]
     end
   end
 
@@ -89,9 +88,9 @@ class EventWatcher
         puts ev
         if @current_event != ev && ev
           @current_event = ev
-          if @current_event && (@current_event[:event] || @current_event["event"])
+          if @current_event && (@current_event[:event])
             handle_event_playback(@current_event)
-          elsif !(@current_event[:event] || @current_event["event"]) # to cater for change in event location
+          elsif !(@current_event[:event]) # to cater for change in event location
             handle_event_playback(@previous_event)
           end
         end
