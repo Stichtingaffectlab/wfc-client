@@ -1,0 +1,29 @@
+name: Tests
+on: push
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Ruby based on .ruby-version
+      uses: ruby/setup-ruby@v1
+
+    - name: Restore bundle cache
+      uses: actions/cache@v4
+      with:
+        path: vendor/bundle
+        key: ${{runner.os}}-gems-${{hashFiles('**/Gemfile.lock')}}
+        restore-keys: ${{runner.os}}-gems-
+
+    - name: Bundle install
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: Run tests
+      run: bin/rspec
