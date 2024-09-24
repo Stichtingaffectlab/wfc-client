@@ -1,3 +1,5 @@
+[![Tests](https://github.com/Stichtingaffectlab/wfc-client/actions/workflows/test.yml/badge.svg)](https://github.com/Stichtingaffectlab/wfc-client/actions/workflows/test.yml)
+
 ## Waiting for cows
 
 Waiting for Cows is an interactive storytelling project that explores the complex relationship between humans, animals and technology. Set on a Friesian farm, the main protagonists are Dutch dairy cows monitored by wearables, conditioned by algorithms and quantified in data.
