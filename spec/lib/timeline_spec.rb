@@ -1,5 +1,5 @@
-require_relative "../timeline"
-require_relative "spec_helper"
+require_relative "../../lib/timeline"
+require_relative "../spec_helper"
 require "yaml"
 
 describe Timeline do
@@ -43,7 +43,22 @@ describe Timeline do
     expect(cows.length).to be 3
   end
 
-  it "has event_location set to inside" do
-    expect(subject.event_location).to eq("inside")
+  describe "event_location" do
+    it "has event_location set to inside" do
+      expect(subject.event_location).to eq("inside")
+    end
+  end
+
+  describe "queue" do
+    it "has a list of items in the queue" do
+      expect(subject.queue).to match_array([])
+    end
+  end
+
+  describe "#get_current" do
+    it "returns the last rumination event" do
+      expect(subject.get_current).to have_key(:event)
+      expect(subject.get_current).to have_key(:duration)
+    end
   end
 end

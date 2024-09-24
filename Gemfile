@@ -2,15 +2,26 @@
 
 source "https://rubygems.org"
 
-
-gem "standard", "~> 1.39"
-
+# to make api calls
 gem "httparty", "~> 0.22.0"
 
+# for some date sugar
 gem "activesupport", "~> 7.1"
 
+# to control led strips
 gem "rtmidi", "~> 0.3"
 
+# for playing video
 gem "mpv", "~> 3.0"
 
-gem "rspec", "~> 3.13"
+group :development do
+  gem "guard"
+  gem "guard-rspec", "~> 4.7"
+
+  # to lint and format code
+  gem "standard", "~> 1.39"
+end
+
+group :test do
+  gem "rspec", "~> 3.13"
+end

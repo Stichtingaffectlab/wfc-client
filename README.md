@@ -51,6 +51,13 @@ We use [standardrb](https://github.com/standardrb/standard) for code formatting 
 
 We have rspec tests that uses timecop gem to check for the queuing of events and how the timeline is built. To run the tests
 
-```
+```sh
 rspec .
 ```
+
+or you can run the below to watch changes as you develop
+
+```sh
+bundle exec guard
+```
+

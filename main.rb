@@ -1,6 +1,6 @@
 require "socket"
 require "json"
-require "./timeline"
+require "./lib/timeline"
 
 class EventWatcher
   VIDEO_PATH = "./videos" # Directory where video files are stored
