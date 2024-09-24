@@ -3,6 +3,8 @@ require_relative "../spec_helper"
 require "yaml"
 require "timecop"
 
+Time.zone = "Amsterdam"
+
 describe Timeline do
   let(:cows) { load_fixture("cows.yml") }
   let(:schedule) { load_fixture("schedule.yml") }
@@ -85,7 +87,6 @@ describe Timeline do
         # It should be milking now as we truncate to the minute
         #
         Timecop.travel(t + 2.minutes) # go 2 minutes ahead
-        puts subject.get_current
         expect(subject.get_current["event"]).to eq("milking")
 
         # the milking duration is for 6 minutes, so check if it is still milking
