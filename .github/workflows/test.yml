@@ -5,6 +5,8 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Amsterdam
 
     steps:
     - name: Checkout code
