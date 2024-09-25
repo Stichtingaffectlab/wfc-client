@@ -1,13 +1,14 @@
 require "httparty"
 require "active_support/all"
 
-DEFAULT_EVENT_LOCATION = "inside"
-
 # Creates a timeline of events to be displayed. This class takes care of mixing and prioritizing
-# different farm events mixed with lely apis and finally create a timeline of data as it happens in
-# realtime.
+# different farm events mixed with lely apis and finally create a timeline of data as it
+# happens in realtime.
 #
 class Timeline
+  DEFAULT_EVENT_LOCATION = "inside"
+  PUT_INSIDE_AFTER = 20 # minutes
+  DEFAULT_EVENT_DURATION = 5 # minutes
   include HTTParty
 
   base_uri "wfc-backend.fly.dev" # for production
@@ -38,7 +39,7 @@ class Timeline
     # change event_location to "inside" if not already changed by the event
     # tip: perhaps consider toggling?
     # @todo change 2 minutes to desirable time
-    set_inside if @event_location_set_at < 2.minutes.ago
+    set_inside if @event_location_set_at < PUT_INSIDE_AFTER.minutes.ago
 
     # If everything is empty then return the current event from base timeline.
     if @queue.empty?
@@ -77,10 +78,10 @@ class Timeline
   def event_duration
     # @todo add more cases for grazing, eating, scheduled event etc
     case @queue.first[:event]
-    when :milking
+    when "milking"
       @queue.first[:duration]
     else
-      5
+      DEFAULT_EVENT_DURATION
     end
   end
 
@@ -144,7 +145,7 @@ class Timeline
   def build_base_timeline
     @last_built_at = Time.current
 
-    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + ((e[:duration] == 0) ? 40 : e[:duration]) }
+    @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + (e[:duration].zero? ? 40 : e[:duration]) }
 
     @base_timeline = @rumination_events.reduce([]) do |s, r|
       s << {

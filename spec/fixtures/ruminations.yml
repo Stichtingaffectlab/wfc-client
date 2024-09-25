@@ -1,3 +1,360 @@
+- id: 1081
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T20:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: 537
+  event_date: '2024-09-24T20:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T22:20:04.622+02:00'
+  updated_at: '2024-09-24T22:20:04.622+02:00'
+  duration: 44
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1079
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T20:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 605
+  event_date: '2024-09-24T20:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T22:10:04.050+02:00'
+  updated_at: '2024-09-24T22:10:04.050+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1080
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T20:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 589
+  event_date: '2024-09-24T20:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T22:20:03.154+02:00'
+  updated_at: '2024-09-24T22:20:03.154+02:00'
+  duration: 48
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1077
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T18:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: null
+  event_date: '2024-09-24T18:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T20:20:05.702+02:00'
+  updated_at: '2024-09-24T20:20:05.702+02:00'
+  duration: 0
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1075
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T18:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 618
+  event_date: '2024-09-24T18:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T20:10:03.821+02:00'
+  updated_at: '2024-09-24T20:10:03.821+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1076
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T18:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 552
+  event_date: '2024-09-24T18:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T20:20:04.052+02:00'
+  updated_at: '2024-09-24T20:20:04.052+02:00'
+  duration: 46
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1071
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T16:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: 554
+  event_date: '2024-09-24T16:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T18:20:04.361+02:00'
+  updated_at: '2024-09-24T18:20:04.361+02:00'
+  duration: 46
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1072
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T16:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 609
+  event_date: '2024-09-24T16:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T18:30:04.244+02:00'
+  updated_at: '2024-09-24T18:30:04.244+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1070
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T16:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 522
+  event_date: '2024-09-24T16:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T18:20:02.716+02:00'
+  updated_at: '2024-09-24T18:20:02.716+02:00'
+  duration: 42
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1069
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T14:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: 579
+  event_date: '2024-09-24T14:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T16:10:05.412+02:00'
+  updated_at: '2024-09-24T16:10:05.412+02:00'
+  duration: 48
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1068
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T14:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 610
+  event_date: '2024-09-24T14:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T16:10:04.304+02:00'
+  updated_at: '2024-09-24T16:10:04.304+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1067
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T14:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 512
+  event_date: '2024-09-24T14:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T16:10:03.515+02:00'
+  updated_at: '2024-09-24T16:10:03.515+02:00'
+  duration: 42
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1066
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T12:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: 528
+  event_date: '2024-09-24T12:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T14:10:03.803+02:00'
+  updated_at: '2024-09-24T14:10:03.803+02:00'
+  duration: 44
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1065
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T12:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 601
+  event_date: '2024-09-24T12:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T14:10:03.400+02:00'
+  updated_at: '2024-09-24T14:10:03.400+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1064
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T12:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 523
+  event_date: '2024-09-24T12:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T14:10:02.838+02:00'
+  updated_at: '2024-09-24T14:10:02.838+02:00'
+  duration: 42
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1062
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T10:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: 539
+  event_date: '2024-09-24T10:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T12:10:04.908+02:00'
+  updated_at: '2024-09-24T12:10:04.908+02:00'
+  duration: 44
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1061
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T10:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 619
+  event_date: '2024-09-24T10:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T12:10:04.136+02:00'
+  updated_at: '2024-09-24T12:10:04.136+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1060
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T10:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 543
+  event_date: '2024-09-24T10:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T12:10:02.645+02:00'
+  updated_at: '2024-09-24T12:10:02.645+02:00'
+  duration: 44
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
+- id: 1056
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T08:00:00'
+    LifeNumber: NL 671905073
+    EatingSeconds: null
+    RuminationMinutes: 530
+  event_date: '2024-09-24T08:00:00.000+02:00'
+  life_number: NL 671905073
+  created_at: '2024-09-24T10:50:06.972+02:00'
+  updated_at: '2024-09-24T10:50:06.972+02:00'
+  duration: 44
+  cow:
+    name: 507 Robina
+    life_number: NL 671905073
+    created_at: '2024-07-15T09:16:55.896+02:00'
+    updated_at: '2024-07-27T13:10:32.060+02:00'
+- id: 1058
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T08:00:00'
+    LifeNumber: NL 671904683
+    EatingSeconds: null
+    RuminationMinutes: 610
+  event_date: '2024-09-24T08:00:00.000+02:00'
+  life_number: NL 671904683
+  created_at: '2024-09-24T12:00:05.351+02:00'
+  updated_at: '2024-09-24T12:00:05.351+02:00'
+  duration: 50
+  cow:
+    name: 468 Argentina
+    life_number: NL 671904683
+    created_at: '2024-07-15T09:16:15.454+02:00'
+    updated_at: '2024-07-27T13:10:51.800+02:00'
+- id: 1054
+  event: ruminations
+  data:
+    DateTime: '2024-09-24T08:00:00'
+    LifeNumber: NL 657402358
+    EatingSeconds: null
+    RuminationMinutes: 545
+  event_date: '2024-09-24T08:00:00.000+02:00'
+  life_number: NL 657402358
+  created_at: '2024-09-24T10:50:04.587+02:00'
+  updated_at: '2024-09-24T10:50:04.587+02:00'
+  duration: 44
+  cow:
+    name: 235 Margo
+    life_number: NL 657402358
+    created_at: '2024-07-15T09:16:39.527+02:00'
+    updated_at: '2024-07-27T13:10:43.213+02:00'
 - id: 1055
   event: ruminations
   data:
