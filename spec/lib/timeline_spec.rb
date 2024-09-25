@@ -155,10 +155,5 @@ describe Timeline do
         expect(@tl.event_location).to eq("inside")
       end
     end
-
-    context "when base timeline is over, a new one is built" do
-      it "still continues to return events as they happen" do
-      end
-    end
   end
 end
