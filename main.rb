@@ -79,18 +79,22 @@ class EventWatcher
 
   # handle video playback before video is played
   def handle_event_playback(ev)
-    video_filename = if get_event_name(ev) == "milking"
-      "#{get_cow_id(ev)}_milking.m3u" # for milking event we use a playlist to include intro and outro
+    cow = cow_id(ev)
+    event = event_name(ev)
+
+    filename = if event == "milking"
+      "#{cow}_milking.m3u" # for milking event we use a playlist to include intro and outro
     else
-      "#{get_cow_id(ev)}_#{get_event_name(ev)}_#{@tl.event_location}.mp4"
+      "#{cow}_#{event}_#{@tl.event_location}.mp4"
     end
     @previous_event = ev
-    play_video(video_filename)
+
+    play_video(filename)
 
     # control led strips
     # first turn all of and then turn on one for the current cow
     # @led.turn_all_off
-    # @led.send(:"cow_#{get_cow_id(ev)}")
+    # @led.send(:"cow_#{cow}")
     # Thread.new do
     #   sleep 60 * 3 # wait for 3 minutes and turn off the led strips
     #   @led.turn_all_off
@@ -98,7 +102,7 @@ class EventWatcher
   end
 
   # get id of the cow
-  def get_cow_id(ev)
+  def cow_id(ev)
     cow = ev[:cow]
     cow = @previous_event[:cow] if !cow
 
@@ -108,7 +112,7 @@ class EventWatcher
 
   # get current event name
   # we don't have videos for resting and grazing, instead for these we simply show alternatives
-  def get_event_name(ev)
+  def event_name(ev)
     case ev[:event]
     when "grazing"
       "eating"
