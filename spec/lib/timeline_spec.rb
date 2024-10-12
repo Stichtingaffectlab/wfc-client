@@ -1,7 +1,7 @@
-require_relative "../../lib/timeline"
-require_relative "../spec_helper"
 require "yaml"
 require "timecop"
+require_relative "../../lib/timeline"
+require_relative "../spec_helper"
 
 def load(file)
   instance_double(HTTParty::Response, body: load_fixture(file))
