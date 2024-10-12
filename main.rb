@@ -1,6 +1,6 @@
 require "socket"
 require "json"
-require "./lib/logger"
+require "./lib/colored_logger"
 require "./lib/timeline"
 
 # An event watcher class to "Wait for the cows"
