@@ -1,7 +1,20 @@
 require "socket"
 require "json"
+require "logger"
+require "colorize"
 require "./lib/timeline"
 
+# Use a coloured logger to print logs
+#
+class ColoredLogger < Logger
+  def format_message(severity, timestamp, progname, msg)
+    # Grey colour for timestamp, reset colour for log message
+    "#{timestamp.strftime("%Y-%m-%d %H:%M:%S").light_black} - #{msg}\n"
+  end
+end
+
+# An event watcher class to "Wait for the cows"
+#
 class EventWatcher
   VIDEO_PATH = "./videos" # Directory where video files are stored
   CHECK_INTERVAL = 4 # seconds
@@ -10,19 +23,34 @@ class EventWatcher
   def initialize
     @tl = Timeline.new
     @last_checked = Time.now - CHECK_INTERVAL - 1
+    @mpv_socket = UNIXSocket.new(MPV_SOCKET) # Store the socket connection
+
+    @logger = ColoredLogger.new(STDOUT)
+    @logger.level = Logger::DEBUG
+
     # @led = LedController.new
   end
 
+  # fetch current event from the timeline
   def fetch_event
     @tl.get_current
   end
 
+  # send command to mpv player
   def send_command(command)
-    socket = UNIXSocket.new(MPV_SOCKET)
-    socket.write(command.to_json + "\n")
-    socket.close
+    @mpv_socket.write(command.to_json + "\n")
+  rescue Errno::EPIPE # Handle broken pipe error
+    # Reconnect the socket if the connection is closed
+    @mpv_socket = UNIXSocket.new(MPV_SOCKET)
+    retry
   end
 
+  # close mpv socket
+  def close_socket
+    @mpv_socket&.close
+  end
+
+  # play video file of the current event
   def play_video(filename)
     filepath = File.join(VIDEO_PATH, filename)
     unless File.exist?(filepath)
@@ -30,7 +58,7 @@ class EventWatcher
       return
     end
 
-    puts "Playing video: #{filename}"
+    log "Playing video: #{filename}"
 
     # loop playlist for milking videos
     if filepath.include? "milking"
@@ -44,11 +72,12 @@ class EventWatcher
     send_command({"command" => ["loadfile", filepath]})
   end
 
+  # handle video playback before video is played
   def handle_event_playback(ev)
-    video_filename = if get_event(ev) == "milking"
-      "#{get_cow(ev)}_milking.m3u" # for milking event we use a playlist to include intro and outro
+    video_filename = if get_event_name(ev) == "milking"
+      "#{get_cow_id(ev)}_milking.m3u" # for milking event we use a playlist to include intro and outro
     else
-      "#{get_cow(ev)}_#{get_event(ev)}_#{@tl.event_location}.mp4"
+      "#{get_cow_id(ev)}_#{get_event_name(ev)}_#{@tl.event_location}.mp4"
     end
     @previous_event = ev
     play_video(video_filename)
@@ -56,21 +85,25 @@ class EventWatcher
     # control led strips
     # first turn all of and then turn on one for the current cow
     # @led.turn_all_off
-    # @led.send(:"cow_#{get_cow(ev)}")
+    # @led.send(:"cow_#{get_cow_id(ev)}")
     # Thread.new do
     #   sleep 60 * 3 # wait for 3 minutes and turn off the led strips
     #   @led.turn_all_off
     # end
   end
 
-  def get_cow(ev)
+  # get id of the cow
+  def get_cow_id(ev)
     cow = ev[:cow]
     cow = @previous_event[:cow] if !cow
+
+    # cow[:name] is usually in this format "435 Robina", starting with the cow id
     cow[:name].split(" ").first
   end
 
+  # get current event name
   # we don't have videos for resting and grazing, instead for these we simply show alternatives
-  def get_event(ev)
+  def get_event_name(ev)
     case ev[:event]
     when "grazing"
       "eating"
@@ -81,11 +114,17 @@ class EventWatcher
     end
   end
 
+  # log to console
+  def log(*args)
+    @logger.info args.join(", ")
+  end
+
+  # handle polling and watching for events (main logic)
   def start_watching
     loop do
       if Time.now - @last_checked >= CHECK_INTERVAL
         ev = fetch_event
-        puts ev
+        log ev if @current_event != ev
         if @current_event != ev && ev
           @current_event = ev
           if @current_event && (@current_event[:event])
@@ -98,6 +137,8 @@ class EventWatcher
       end
       sleep(CHECK_INTERVAL + 1)
     end
+  ensure
+    close_socket
   end
 end
 

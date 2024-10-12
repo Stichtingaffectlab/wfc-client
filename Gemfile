@@ -29,3 +29,5 @@ group :test do
   # for time travelling and testing the timeline
   gem "timecop", "~> 0.9.10"
 end
+
+gem "colorize", "~> 1.1"
