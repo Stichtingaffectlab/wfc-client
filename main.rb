@@ -25,30 +25,35 @@ class EventWatcher
     @last_checked = Time.now - CHECK_INTERVAL - 1
     @mpv_socket = UNIXSocket.new(MPV_SOCKET) # Store the socket connection
 
-    @logger = ColoredLogger.new(STDOUT)
+    @logger = ColoredLogger.new($stdout)
     @logger.level = Logger::DEBUG
 
     # @led = LedController.new
   end
 
-  # fetch current event from the timeline
-  def fetch_event
-    @tl.get_current
+  # handle polling and watching for events (main logic)
+  def start_watching
+    loop do
+      if Time.now - @last_checked >= CHECK_INTERVAL
+        ev = fetch_event
+        log ev if @current_event != ev
+        if @current_event != ev && ev
+          @current_event = ev
+          if @current_event && (@current_event[:event])
+            handle_event_playback(@current_event)
+          elsif !(@current_event[:event]) # to cater for change in event location
+            handle_event_playback(@previous_event)
+          end
+        end
+        @last_checked = Time.now if ev
+      end
+      sleep(CHECK_INTERVAL + 1)
+    end
+  ensure
+    close_socket
   end
 
-  # send command to mpv player
-  def send_command(command)
-    @mpv_socket.write(command.to_json + "\n")
-  rescue Errno::EPIPE # Handle broken pipe error
-    # Reconnect the socket if the connection is closed
-    @mpv_socket = UNIXSocket.new(MPV_SOCKET)
-    retry
-  end
-
-  # close mpv socket
-  def close_socket
-    @mpv_socket&.close
-  end
+  private
 
   # play video file of the current event
   def play_video(filename)
@@ -114,31 +119,28 @@ class EventWatcher
     end
   end
 
+  # fetch current event from the timeline
+  def fetch_event
+    @tl.get_current
+  end
+
+  # send command to mpv player
+  def send_command(command)
+    @mpv_socket.write(command.to_json + "\n")
+  rescue Errno::EPIPE # Handle broken pipe error
+    # Reconnect the socket if the connection is closed
+    @mpv_socket = UNIXSocket.new(MPV_SOCKET)
+    retry
+  end
+
+  # close mpv socket
+  def close_socket
+    @mpv_socket&.close
+  end
+
   # log to console
   def log(*args)
     @logger.info args.join(", ")
-  end
-
-  # handle polling and watching for events (main logic)
-  def start_watching
-    loop do
-      if Time.now - @last_checked >= CHECK_INTERVAL
-        ev = fetch_event
-        log ev if @current_event != ev
-        if @current_event != ev && ev
-          @current_event = ev
-          if @current_event && (@current_event[:event])
-            handle_event_playback(@current_event)
-          elsif !(@current_event[:event]) # to cater for change in event location
-            handle_event_playback(@previous_event)
-          end
-        end
-        @last_checked = Time.now if ev
-      end
-      sleep(CHECK_INTERVAL + 1)
-    end
-  ensure
-    close_socket
   end
 end
 
