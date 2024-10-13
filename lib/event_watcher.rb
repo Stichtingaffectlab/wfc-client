@@ -1,6 +1,6 @@
 require_relative "colored_logger"
 require_relative "timeline"
-require_relative "mpv"
+require_relative "player"
 # require_relative "led"
 
 # An event watcher class to "Wait for the cows"
@@ -10,7 +10,7 @@ class EventWatcher
 
   def initialize
     @tl = Timeline.new
-    @mpv = MPV.new
+    @player = Player.new
     @last_checked = Time.now - CHECK_INTERVAL - 1
 
     @logger = ColoredLogger.new($stdout)
@@ -38,7 +38,7 @@ class EventWatcher
       sleep(CHECK_INTERVAL + 1)
     end
   ensure
-    @mpv.close_socket
+    @player.close
   end
 
   private
@@ -55,7 +55,7 @@ class EventWatcher
     end
     @previous_event = ev
 
-    @mpv.play_video(filename)
+    @player.play_video(filename)
 
     # control led strips
     # first turn all of and then turn on one for the current cow

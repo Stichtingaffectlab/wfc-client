@@ -1,7 +1,7 @@
 require "socket"
 require_relative "colored_logger"
 
-class MPV
+class Player
   MPV_SOCKET = "/tmp/mpvsocket"
   VIDEO_PATH = "./videos" # Directory where video files are stored
 
@@ -37,7 +37,7 @@ class MPV
   end
 
   # close mpv socket
-  def close_socket
+  def close
     @socket&.close
   end
 
