@@ -14,29 +14,40 @@ sudo apt install mpv # for debian based distros
 sudo dnf install mpv # for red had based
 ```
 
+Set up [rbenv](https://github.com/rbenv/rbenv), which should install the right ruby and bundler versions.
+
 And then
 
 ```sh
 bundle install
-mkdir videos
-# copy videos of the cows in this directory
-# make sure the videos are named like this:
-#
-#   235_grazing_inside.mp4
-#   235_grazing_outside.mp4
-#   235_milking_inside.mp4
-#   235_milking_outside.mp4
-#   235_ruminations_inside.mp4
-#   235_ruminations_outside.mp4
-#
-# same for the other cows
-#
+```
 
-# run the mpv player in background
+Copy videos of the cows in `videos` directory. And make sure they are named in the following way
+
+```
+235_grazing_inside.mp4
+235_grazing_outside.mp4
+235_milking_inside.mp4
+235_milking_outside.mp4
+235_ruminations_inside.mp4
+235_ruminations_outside.mp4
+```
+
+Do the same for the other cows.
+
+Run the mpv player in background
+
+```sh
 mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mp4 &
-# set API_URL=localhost:3000 if you want to use localhost
+```
+
+Start the script
+
+```sh
 ruby main.rb
 ```
+
+You may set the environment `API_URL=localhost:3000` if you are using the [backend](https://github.com/Stichtingaffectlab/wfc-backend) locally
 
 The correct name of the events in the filename must be
 
