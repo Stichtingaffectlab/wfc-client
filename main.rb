@@ -1,7 +1,8 @@
 require "json"
-require "./lib/colored_logger"
-require "./lib/timeline"
-require "./lib/mpv"
+require_relative "lib/colored_logger"
+require_relative "lib/timeline"
+require_relative "lib/mpv"
+# require_relative "lib/led"
 
 # An event watcher class to "Wait for the cows"
 #
