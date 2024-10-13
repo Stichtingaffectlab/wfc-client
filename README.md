@@ -7,7 +7,7 @@ Waiting for Cows is an interactive storytelling project that explores the comple
 
 ## Set up
 
-**Requirements**: A linux machine with mpv installed
+**Requirements**: A linux machine with [mpv](https://mpv.io) installed
 
 ```sh
 sudo apt install mpv # for debian based distros
