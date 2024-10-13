@@ -20,7 +20,7 @@ class EventWatcher
   end
 
   # handle polling and watching for events (main logic)
-  def start_watching
+  def start
     loop do
       if Time.now - @last_checked >= CHECK_INTERVAL
         ev = fetch_event
