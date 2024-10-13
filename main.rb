@@ -1,19 +1,17 @@
-require "socket"
 require "json"
 require "./lib/colored_logger"
 require "./lib/timeline"
+require "./lib/mpv"
 
 # An event watcher class to "Wait for the cows"
 #
 class EventWatcher
-  VIDEO_PATH = "./videos" # Directory where video files are stored
   CHECK_INTERVAL = 4 # seconds
-  MPV_SOCKET = "/tmp/mpvsocket"
 
   def initialize
     @tl = Timeline.new
+    @mpv = MPV.new
     @last_checked = Time.now - CHECK_INTERVAL - 1
-    @mpv_socket = UNIXSocket.new(MPV_SOCKET) # Store the socket connection
 
     @logger = ColoredLogger.new($stdout)
     @logger.level = Logger::DEBUG
@@ -40,32 +38,10 @@ class EventWatcher
       sleep(CHECK_INTERVAL + 1)
     end
   ensure
-    close_socket
+    @mpv.close_socket
   end
 
   private
-
-  # play video file of the current event
-  def play_video(filename)
-    filepath = File.join(VIDEO_PATH, filename)
-    unless File.exist?(filepath)
-      puts "Video file #{filename} not found."
-      return
-    end
-
-    log "Playing video: #{filename}"
-
-    # loop playlist for milking videos
-    if filepath.include? "milking"
-      send_command({"command" => ["set_property", "loop", "no"]})
-      send_command({"command" => ["set_property", "loop-playlist", "inf"]})
-    else
-      send_command({"command" => ["set_property", "loop", "yes"]})
-    end
-
-    # Send command to play video
-    send_command({"command" => ["loadfile", filepath]})
-  end
 
   # handle video playback before video is played
   def handle_event_playback(ev)
@@ -79,7 +55,7 @@ class EventWatcher
     end
     @previous_event = ev
 
-    play_video(filename)
+    @mpv.play_video(filename)
 
     # control led strips
     # first turn all of and then turn on one for the current cow
@@ -116,20 +92,6 @@ class EventWatcher
   # fetch current event from the timeline
   def fetch_event
     @tl.get_current
-  end
-
-  # send command to mpv player
-  def send_command(command)
-    @mpv_socket.write(command.to_json + "\n")
-  rescue Errno::EPIPE # Handle broken pipe error
-    # Reconnect the socket if the connection is closed
-    @mpv_socket = UNIXSocket.new(MPV_SOCKET)
-    retry
-  end
-
-  # close mpv socket
-  def close_socket
-    @mpv_socket&.close
   end
 
   # log to console
