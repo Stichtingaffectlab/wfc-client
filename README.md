@@ -34,6 +34,7 @@ mkdir videos
 
 # run the mpv player in background
 mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mp4 &
+# set API_URL=localhost:3000 if you want to use localhost
 ruby main.rb
 ```
 
