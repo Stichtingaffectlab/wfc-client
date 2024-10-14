@@ -82,7 +82,7 @@ class EventWatcher
     case ev[:event]
     when "grazing"
       "eating"
-    when "resting"
+    when "resting", "ruminating"
       "ruminations"
     else
       ev[:event]
