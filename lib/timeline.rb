@@ -36,8 +36,6 @@ class Timeline
     build_base_timeline if @last_built_at <= @base_timeline_duration.minutes.ago
 
     # change event_location to "inside" if not already changed by the event
-    # tip: perhaps consider toggling?
-    # @todo change 2 minutes to desirable time
     set_inside if @event_location_set_at < PUT_INSIDE_AFTER.minutes.ago
 
     # If everything is empty then return the current event from base timeline.
@@ -68,6 +66,9 @@ class Timeline
       @event_location_set_at = Time.current
     end
 
+    # make sure the method returns an event
+    # note that this can possibly lead to infinite loop if there is no data for the present day
+    # in that case, run the job
     @queue.first || get_current
   end
 
