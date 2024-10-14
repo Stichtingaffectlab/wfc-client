@@ -4,8 +4,7 @@
 
 Waiting for Cows is an interactive storytelling project that explores the complex relationship between humans, animals and technology. Set on a Friesian farm, the main protagonists are Dutch dairy cows monitored by wearables, conditioned by algorithms and quantified in data.
 
-
-## Set up
+## Development
 
 **Requirements**: A linux machine with [mpv](https://mpv.io) installed
 
@@ -51,9 +50,9 @@ You may set the environment `API_URL=localhost:3000` if you are running our [bac
 
 The correct name of the events in the filename must be `ruminations`, `milking`, `eating`, `grazing`, `resting`.
 
-## Development
+## Code style
 
-We use [standardrb](https://github.com/standardrb/standard) for code formatting and linting.
+We use [standardrb](https://github.com/standardrb/standard) for code formatting and linting. Make sure to install the [standard ruby vscode extension](https://marketplace.visualstudio.com/items?itemName=testdouble.vscode-standard-ruby) if you are using vscode/vscodium. They support various editors, do check out their [repository](https://github.com/standardrb/standard?tab=readme-ov-file#editor-support).
 
 ## Testing
 
