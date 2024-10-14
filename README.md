@@ -13,6 +13,12 @@ sudo apt install mpv # for debian based distros
 sudo dnf install mpv # for red had based
 ```
 
+or if you are using a mac
+
+```
+brew install mpv
+```
+
 Set up [rbenv](https://github.com/rbenv/rbenv), which should install the right ruby and bundler versions.
 
 And then
