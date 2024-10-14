@@ -35,7 +35,7 @@ Copy videos of the cows in `videos` directory. And make sure they are named in t
 
 Do the same for the other cows.
 
-Run the mpv player in background
+Run the mpv player in background (ntice the `&` at the end)
 
 ```sh
 mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mp4 &
@@ -47,15 +47,9 @@ Start the script
 ruby main.rb
 ```
 
-You may set the environment `API_URL=localhost:3000` if you are using the [backend](https://github.com/Stichtingaffectlab/wfc-backend) locally
+You may set the environment `API_URL=localhost:3000` if you are running our [backend](https://github.com/Stichtingaffectlab/wfc-backend) locally.
 
-The correct name of the events in the filename must be
-
-- ruminations
-- milking
-- eating
-- grazing
-- resting
+The correct name of the events in the filename must be `ruminations`, `milking`, `eating`, `grazing`, `resting`.
 
 ## Development
 
