@@ -13,8 +13,10 @@ class Player
 
   # play video file of the current event
   def play_video(filename)
+    @previous = @current if @current  # store previously playing video
+    @current = filename
+
     file = filepath(filename)
-    # cow_id = filename.split("_").first
 
     unless File.exist?(file)
       puts "Video file #{filename} not found."
@@ -23,17 +25,24 @@ class Player
 
     @logger.info "Playing video: #{filename}"
 
-    # @todo wip
     # separate logic for milking videos
     if file.include? "milking"
+      cow_id = filename.split("_").first
       send_command(["set_property", "loop", "no"])
-      send_command(["set_property", "loop-playlist", "inf"])
-      # return handle_milking_playback(cow_id)
+      # enqueue milking files and then in the end enqueue the file which was playing before milking
+      # so that the playlist doesn't stop playing
+      enqueue([
+        "#{cow_id}_milking_intro.mp4",
+        "#{cow_id}_milking.mp4",
+        "#{cow_id}_milking_outro.mp4",
+        @previous
+      ])
+      send_command(["playlist-next"])
+      # send_command(["set_property", "loop", "yes"])
     else
       send_command(["set_property", "loop", "yes"])
+      send_command(["loadfile", file])
     end
-
-    send_command(["loadfile", file])
   end
 
   # close mpv socket
@@ -43,47 +52,9 @@ class Player
 
   private
 
-  def handle_milking_playback(cow_id)
-    send_command(["set_property", "loop", "no"])
-    enqueue(["#{cow_id}_milking_intro.mp4", "#{cow_id}_milking.mp4"])
-
-    # Listen for end of file events
-    listen_for_events do |ev|
-      if ev["event"] == "end-file"
-        @logger.info ev
-
-        send_command(["playlist-next"])
-
-        # Wait for a short duration to ensure the file has started
-        sleep(0.5)
-
-        # @todo get the duration of the next file
-        # seek based on amount of time the milking event needs to be played considering event_duration
-        # send_command(["seek", 2 * 60, "absolute"])
-
-        enqueue(["#{cow_id}_milking_outro.mp4"])
-
-        # Exit the loop after handling the seek
-        break
-      end
-    end
-
-    # send_command(["loadfile", "#{cow}_milking_outro.mp4"])
-    # send_command(["set_property", "loop", "yes"])
-  end
-
   def enqueue(files)
     files.each do |file|
       send_command(["loadfile", filepath(file), "append"])
-    end
-  end
-
-  def listen_for_events
-    send_command(["observe_property", 1, "playlist-count"])
-
-    while (response = @socket.gets)
-      event = JSON.parse(response)
-      yield(event) if block_given?
     end
   end
 
