@@ -14,6 +14,8 @@ jobs:
 
     - name: Setup Ruby based on .ruby-version
       uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
 
     - name: Restore bundle cache
       uses: actions/cache@v4
