@@ -9,7 +9,7 @@ gem "httparty", "~> 0.22.0"
 gem "activesupport", "~> 7.1"
 
 # to control led strips
-gem "rtmidi", "~> 0.3"
+gem "rtmidi", "~> 0.3", require: false
 
 # for playing video
 gem "mpv", "~> 3.0"
