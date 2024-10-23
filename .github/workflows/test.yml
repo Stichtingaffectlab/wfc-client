@@ -12,6 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Install necessary packages
+      run: sudo apt-get install -y libasound2 libasound2-dev
+
     - name: Setup Ruby based on .ruby-version
       uses: ruby/setup-ruby@v1
       with:
@@ -23,9 +26,6 @@ jobs:
         path: vendor/bundle
         key: ${{runner.os}}-gems-${{hashFiles('**/Gemfile.lock')}}
         restore-keys: ${{runner.os}}-gems-
-
-    - name: Install necessary packages
-      run: sudo apt-get install -y libasound2 libasound2-dev
 
     - name: Bundle install
       run: |
