@@ -8,11 +8,16 @@ gem "httparty", "~> 0.22.0"
 # for some date sugar
 gem "activesupport", "~> 7.1"
 
-# to control led strips
-gem "rtmidi", "~> 0.3", require: false
-
 # for playing video
 gem "mpv", "~> 3.0"
+
+# for logging
+gem "colorize", "~> 1.1"
+
+gem "rake"
+
+# to control led strips
+gem "rtmidi", "~> 0.3", require: false
 
 group :development do
   gem "guard"
@@ -29,5 +34,3 @@ group :test do
   # for time travelling and testing the timeline
   gem "timecop", "~> 0.9.10"
 end
-
-gem "colorize", "~> 1.1"
