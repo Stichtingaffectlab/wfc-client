@@ -81,8 +81,9 @@ class EventWatcher
 
     # cow[:name] is usually in this format "435 Robina", starting with the cow id
     cow[:name].split(" ").first
-  rescue
-    "507"
+  rescue => e
+    @logger.error e
+    "507" # if there's any issue, make sure the default cow is Robina
   end
 
   # get current event name
@@ -96,8 +97,9 @@ class EventWatcher
     else
       ev[:event]
     end
-  rescue
-    "ruminations"
+  rescue => e
+    @logger.error e
+    "ruminations" # if there's any issue, make sure the default event is ruminations
   end
 
   # fetch current event from the timeline
