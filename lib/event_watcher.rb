@@ -55,7 +55,14 @@ class EventWatcher
     end
     @previous_event = ev
 
-    @player.play_video(filename)
+    if @current_location != @tl.event_location
+      @player.append(["cows_go_#{@tl.event_location}.mp4", "#{cow}_#{event}_#{@tl.event_location}.mp4"])
+      @current_location = @tl.event_location
+      sleep 13 # wait for the cows go inside/outside video to finish playing and then set the video in loop
+      @player.loop_video
+    else
+      @player.play_video(filename)
+    end
 
     # control led strips
     # first turn all of and then turn on one for the current cow
@@ -74,6 +81,8 @@ class EventWatcher
 
     # cow[:name] is usually in this format "435 Robina", starting with the cow id
     cow[:name].split(" ").first
+  rescue
+    "507"
   end
 
   # get current event name
@@ -87,6 +96,8 @@ class EventWatcher
     else
       ev[:event]
     end
+  rescue
+    "ruminations"
   end
 
   # fetch current event from the timeline

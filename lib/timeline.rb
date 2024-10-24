@@ -9,6 +9,7 @@ class Timeline
   DEFAULT_EVENT_LOCATION = "inside"
   PUT_INSIDE_AFTER = 20 # minutes
   DEFAULT_EVENT_DURATION = 5 # minutes
+  DEFAULT_EVENT_CHECK = 2 # minutes
   include HTTParty
 
   base_uri ENV["API_URL"] || "wfc-backend.fly.dev"
@@ -28,7 +29,7 @@ class Timeline
   end
 
   def get_current
-    if !@last_queued_at || @last_queued_at < 5.minutes.ago || @queue.empty?
+    if !@last_queued_at || @last_queued_at < DEFAULT_EVENT_CHECK.minutes.ago || @queue.empty?
       enqueue
     end
 

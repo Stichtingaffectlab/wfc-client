@@ -28,7 +28,7 @@ class Player
     # separate logic for milking videos
     if file.include? "milking"
       cow_id = filename.split("_").first
-      send_command(["set_property", "loop", "no"])
+      loop_video("no")
       # enqueue milking files and then in the end enqueue the file which was playing before milking
       # so that the playlist doesn't stop playing
       enqueue([
@@ -43,6 +43,17 @@ class Player
       send_command(["set_property", "loop", "yes"])
       send_command(["loadfile", file])
     end
+  end
+
+  def append(files)
+    @logger.info "Playing video: #{files.join(", ")}"
+    loop_video("no")
+    enqueue(files)
+    send_command(["playlist-next"])
+  end
+
+  def loop_video(value = "yes")
+    send_command(["set_property", "loop", value])
   end
 
   # close mpv socket
