@@ -9,7 +9,7 @@ class Timeline
   DEFAULT_EVENT_LOCATION = "inside"
   PUT_INSIDE_AFTER = 20 # minutes
   DEFAULT_EVENT_DURATION = 5 # minutes
-  DEFAULT_EVENT_CHECK = 2 # minutes
+  DEFAULT_EVENT_CHECK = 5 # minutes
   include HTTParty
 
   base_uri ENV["API_URL"] || "wfc-backend.fly.dev"
