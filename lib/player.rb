@@ -32,21 +32,20 @@ class Player
       # enqueue milking files and then in the end enqueue the file which was playing before milking
       # so that the playlist doesn't stop playing
       enqueue([
-        "#{cow_id}_milking_intro.mp4",
-        "#{cow_id}_milking.mp4",
-        "#{cow_id}_milking_outro.mp4",
+        "#{cow_id}_milking_main.mp4",
         @previous
       ])
       send_command(["playlist-next"])
       # send_command(["set_property", "loop", "yes"])
     else
-      send_command(["set_property", "loop", "yes"])
+      loop_video("yes")
       send_command(["loadfile", file])
     end
   end
 
   def append(files)
     @logger.info "Playing video: #{files.join(", ")}"
+    @previous = files.last
     loop_video("no")
     enqueue(files)
     send_command(["playlist-next"])
@@ -64,7 +63,7 @@ class Player
   private
 
   def enqueue(files)
-    files.each do |file|
+    files.select { |x| x }.each do |file|
       send_command(["loadfile", filepath(file), "append"])
     end
   end

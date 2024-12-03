@@ -30,10 +30,9 @@ bundle install
 Copy videos of the cows in `videos` directory. And make sure they are named in the following way
 
 ```
-235_grazing_inside.mp4
-235_grazing_outside.mp4
-235_milking_inside.mp4
-235_milking_outside.mp4
+235_eating_inside.mp4
+235_eating_outside.mp4
+235_milking_main.mp4
 235_ruminations_inside.mp4
 235_ruminations_outside.mp4
 ```

@@ -49,13 +49,13 @@ class EventWatcher
     event = event_name(ev)
 
     filename = if event == "milking"
-      "#{cow}_milking.m3u" # for milking event we use a playlist to include intro and outro
+      "#{cow}_milking_main.mp4"
     else
       "#{cow}_#{event}_#{@tl.event_location}.mp4"
     end
     @previous_event = ev
 
-    if @current_location != @tl.event_location
+    if @current_location != @tl.event_location && event != "milking"
       @player.append(["cows_go_#{@tl.event_location}.mp4", "#{cow}_#{event}_#{@tl.event_location}.mp4"])
       @current_location = @tl.event_location
       sleep 13 # wait for the cows go inside/outside video to finish playing and then set the video in loop
