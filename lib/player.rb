@@ -33,7 +33,7 @@ class Player
       # so that the playlist doesn't stop playing
       enqueue([
         "#{cow_id}_milking_main.mp4",
-        @previous
+        @previous || "#{cow_id}_ruminations_inside.mp4" # if in case milking is the only event, we enqueue this to prevent video from stop playing
       ])
       send_command(["playlist-next"])
       # send_command(["set_property", "loop", "yes"])
