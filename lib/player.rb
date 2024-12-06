@@ -38,7 +38,7 @@ class Player
       send_command(["playlist-next"])
       # send_command(["set_property", "loop", "yes"])
     else
-      loop_video("yes")
+      loop_video
       send_command(["loadfile", file])
     end
   end
