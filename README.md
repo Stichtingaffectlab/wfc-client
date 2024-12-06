@@ -62,6 +62,8 @@ chmod +x ./run.sh
 ./run.sh
 ```
 
+Then you can check for logs in `tmp/` folder and `tail` it
+
 ## Code style
 
 We use [standardrb](https://github.com/standardrb/standard) for code formatting and linting. Make sure to install the [standard ruby vscode extension](https://marketplace.visualstudio.com/items?itemName=testdouble.vscode-standard-ruby) if you are using vscode/vscodium. They support various editors, do check out their [repository](https://github.com/standardrb/standard?tab=readme-ov-file#editor-support).
