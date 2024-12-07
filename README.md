@@ -62,7 +62,14 @@ chmod +x ./run-wfc.sh
 ./run-wfc.sh
 ```
 
-Then you can check for logs in `tmp/` folder and `tail` it
+Then you can check for logs in `tmp/` folder and `tail` it.
+
+If you simply want to end all the processes, you can run
+
+```sh
+chmod +x ./end-wfc.sh
+./end-wfc.sh
+```
 
 ## Code style
 
