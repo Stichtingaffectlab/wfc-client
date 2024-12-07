@@ -150,6 +150,7 @@ class Timeline
 
     @base_timeline = @rumination_events.reduce([]) do |s, r|
       s << {
+        id: r[:id],
         event: "ruminations",
         duration: r[:duration].zero? ? 40 : r[:duration],
         timestamp: ((s.last && s.last[:timestamp]) || Time.current) + (s.empty? ? 0 : s.last[:duration].minutes),
@@ -175,7 +176,7 @@ class Timeline
   # The base timeline can be overridden by the schedule
   #
   def fetch_schedule
-    @farm_schedule = self.class.get("/api/farm_schedule")["schedule"].map(&:deep_symbolize_keys)
+    @farm_schedule = self.class.get("/api/farm_schedule")["schedule"]&.map(&:deep_symbolize_keys)
   end
 
   # here we get
