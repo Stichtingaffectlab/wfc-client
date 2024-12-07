@@ -58,8 +58,8 @@ The correct name of the events in the filename must be `ruminations`, `milking`,
 OR you can simply run the bash script which runs both the above commands. In the museum installation, this might be the easier approach
 
 ```sh
-chmod +x ./run.sh
-./run.sh
+chmod +x ./run-wfc.sh
+./run-wfc.sh
 ```
 
 Then you can check for logs in `tmp/` folder and `tail` it
