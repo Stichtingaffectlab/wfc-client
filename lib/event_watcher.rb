@@ -49,14 +49,14 @@ class EventWatcher
     event = event_name(ev)
 
     filename = if event == "milking"
-      "#{cow}_milking_main.mp4"
+      "#{cow}_milking_main"
     else
-      "#{cow}_#{event}_#{@tl.event_location}.mp4"
+      "#{cow}_#{event}_#{@tl.event_location}"
     end
     @previous_event = ev
 
     if @current_location != @tl.event_location && event != "milking"
-      @player.append(["cows_go_#{@tl.event_location}.mp4", "#{cow}_#{event}_#{@tl.event_location}.mp4"])
+      @player.append(["cows_go_#{@tl.event_location}.mp4", "#{cow}_#{event}_#{@tl.event_location}"])
       @current_location = @tl.event_location
       sleep 14 # wait for the cows go inside/outside video to finish playing and then set the video in loop
       @player.loop_video

@@ -4,6 +4,7 @@ require_relative "colored_logger"
 class Player
   MPV_SOCKET = "/tmp/mpvsocket"
   VIDEO_PATH = "./videos" # Directory where video files are stored
+  FILE_EXT = ".mov"
 
   def initialize
     @socket = UNIXSocket.new(MPV_SOCKET) # Store the socket connection
@@ -19,7 +20,7 @@ class Player
     file = filepath(filename)
 
     unless File.exist?(file)
-      puts "Video file #{filename} not found."
+      puts "Video file #{filename}#{FILE_EXT} not found."
       return
     end
 
@@ -32,8 +33,8 @@ class Player
       # enqueue milking files and then in the end enqueue the file which was playing before milking
       # so that the playlist doesn't stop playing
       enqueue([
-        "#{cow_id}_milking_main.mp4",
-        @previous || "#{cow_id}_ruminations_inside.mp4" # if in case milking is the only event, we enqueue this to prevent video from stop playing
+        "#{cow_id}_milking_main",
+        @previous || "#{cow_id}_ruminations_inside" # if in case milking is the only event, we enqueue this to prevent video from stop playing
       ])
       send_command(["playlist-next"])
       # send_command(["set_property", "loop", "yes"])
@@ -78,6 +79,7 @@ class Player
   end
 
   def filepath(filename)
-    File.join(VIDEO_PATH, filename)
+    file_ext = filename.include?(".") ? "" : FILE_EXT
+    File.join(VIDEO_PATH, filename + file_ext)
   end
 end

@@ -167,7 +167,8 @@ class Timeline
   # We create a base timeline with resting and ruminations.
   #
   def fetch_ruminations
-    @rumination_events = self.class.get("/api/cow_events?event=ruminations").slice(0, @cows.length).map(&:deep_symbolize_keys)
+    now = Time.current.utc
+    @rumination_events = self.class.get("/api/cow_events?event=ruminations&till_date=#{now}").slice(0, @cows.length).map(&:deep_symbolize_keys)
   end
 
   # here we get
