@@ -144,6 +144,8 @@ class Timeline
   end
 
   def build_base_timeline
+    fetch_ruminations
+
     @last_built_at = Time.current
 
     @base_timeline_duration = @rumination_events.reduce(0) { |s, e| s + (e[:duration].zero? ? 40 : e[:duration]) }
