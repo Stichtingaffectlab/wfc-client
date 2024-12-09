@@ -108,7 +108,6 @@ class Timeline
       event_time.between?(truncate_to_minute(@last_queued_at), truncate_to_minute(Time.current))
     end
 
-    # @todo this should check for the milking duration (and play the video for that duration)
     # See if there are any new milkings
     fetch_milking
     # get milking events
