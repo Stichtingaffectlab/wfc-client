@@ -53,7 +53,7 @@ class EventWatcher
     else
       "#{cow}_#{event}_#{@tl.event_location}"
     end
-    @previous_event = ev
+    @previous_event = ev if event != "milking"
 
     if @current_location != @tl.event_location && event != "milking"
       @player.append(["cows_go_#{@tl.event_location}.mp4", "#{cow}_#{event}_#{@tl.event_location}"])
