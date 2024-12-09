@@ -53,9 +53,8 @@ class Timeline
       build_base_timeline unless current_event
 
       return current_event
-    elsif (@last_popped_at || Time.parse(@queue.first[:created_at])) < event_duration.minutes.ago
+    elsif Time.parse(@queue.first[:created_at]) < event_duration.minutes.ago
       # empty the queue
-      @last_popped_at = Time.current
       last = @queue.shift
       @all.push(last)
     end
@@ -136,13 +135,6 @@ class Timeline
     @last_queued_at = Time.current
   end
 
-  def renew
-    fetch_ruminations
-    fetch_schedule
-    fetch_overrides
-    fetch_milking
-  end
-
   def build_base_timeline
     fetch_ruminations
 
@@ -161,42 +153,26 @@ class Timeline
     end
   end
 
-  # here we get
-  #   `event`: `ruminations`
-  #   `cow`
-  # The rumination event must be spread across 2hr timeline randomly for each cow there is.
-  # And the rest must be filled with resting event.
-  # We create a base timeline with resting and ruminations.
-  #
+  def renew
+    fetch_ruminations
+    fetch_schedule
+    fetch_overrides
+    fetch_milking
+  end
+
   def fetch_ruminations
     now = Time.current.utc
     @rumination_events = self.class.get("/api/cow_events?event=ruminations&till_date=#{now}").slice(0, @cows.length).map(&:deep_symbolize_keys)
   end
 
-  # here we get
-  #   `event_location`
-  #   `event`: `eating`
-  # The base timeline can be overridden by the schedule
-  #
   def fetch_schedule
     @farm_schedule = self.class.get("/api/farm_schedule")["schedule"]&.map(&:deep_symbolize_keys)
   end
 
-  # here we get
-  #   `event_location`,
-  #   `event`: `grazing`, `ruminating`, `eating`, `resting`,
-  #   `cow` or `cows`
-  # The base timeline and the schedule can be overridden by the farm events
-  #
   def fetch_overrides
     @farm_overrides = self.class.get("/api/farm_events").map(&:deep_symbolize_keys)
   end
 
-  # here we get
-  #   `event`: `milking`
-  #   `cow`
-  # This event has the highest precedence. Whenever we get this event, it must be displayed.
-  #
   def fetch_milking
     @milking_events = self.class.get("/api/cow_events?event=milking").map(&:deep_symbolize_keys)
   end
