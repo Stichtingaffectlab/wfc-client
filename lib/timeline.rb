@@ -53,7 +53,7 @@ class Timeline
       build_base_timeline unless current_event
 
       return current_event
-    elsif Time.parse(@queue.first[:created_at]) < event_duration.minutes.ago
+    elsif Time.parse(event_time_field) < event_duration.minutes.ago
       # empty the queue
       last = @queue.shift
       @all.push(last)
@@ -82,6 +82,17 @@ class Timeline
       @queue.first[:duration]
     else
       DEFAULT_EVENT_DURATION
+    end
+  end
+
+  def event_time_field
+    ev = @queue.first
+    if ev[:kind] == "schedule"
+      ev[:outside_at] || ev[:inside_at] || ev[:eats_at]
+    else
+      # meaning it's an override or a milking event
+      # for both of which, we consider created_at
+      ev[:created_at]
     end
   end
 
@@ -161,7 +172,8 @@ class Timeline
 
   def fetch_ruminations
     now = Time.current.utc
-    @rumination_events = self.class.get("/api/cow_events?event=ruminations&till_date=#{now}").slice(0, @cows.length).map(&:deep_symbolize_keys)
+    from_date = now - 6.hours
+    @rumination_events = self.class.get("/api/cow_events?event=ruminations&till_date=#{now}&from_date=#{from_date}").slice(0, @cows.length).map(&:deep_symbolize_keys)
   end
 
   def fetch_schedule
