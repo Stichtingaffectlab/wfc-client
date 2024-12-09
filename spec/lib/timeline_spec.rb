@@ -32,7 +32,7 @@ describe Timeline do
 
     # Mock the cow events API call for ruminations
     allow(Timeline).to receive(:get)
-      .with("/api/cow_events?event=ruminations&till_date=#{Time.current.utc}")
+      .with(a_string_matching(%r{/api/cow_events\?event=ruminations.*}))
       .and_return(ruminations)
 
     # Mock the cow events API call for milking
