@@ -129,4 +129,4 @@ or follow [this guide](https://learn.sparkfun.com/tutorials/how-to-run-a-raspber
 
 ## Credits
 
-[RobBothof](https://github.com/RobBothof)
+[madhums](https://github.com/madhums) and [RobBothof](https://github.com/RobBothof)
