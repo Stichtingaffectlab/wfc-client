@@ -79,7 +79,6 @@ class Player
   end
 
   def filepath(filename)
-    file_ext = filename.include?(".") ? "" : FILE_EXT
-    File.join(VIDEO_PATH, filename + file_ext)
+    File.join(VIDEO_PATH, filename + FILE_EXT)
   end
 end
