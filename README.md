@@ -114,9 +114,15 @@ mkdir ~/.config/autostart
 cat <<EOF | tee -a ~/.config/autostart/wfc.desktop
 [Desktop Entry]
 Type=Application
-Exec=sleep 10 && /home/robina/code/wfc-client/run-wfc.sh
+Exec=/bin/sh -c "sleep 10 && /home/robina/code/wfc-client/run-wfc.sh"
 Name=WFC
 EOF
+```
+
+You may run the below command to ensure the validity of the autostart file
+
+```
+desktop-file-validate ~/.config/autostart/wfc.desktop
 ```
 
 or follow [this guide](https://learn.sparkfun.com/tutorials/how-to-run-a-raspberry-pi-program-on-startup#method-2-autostart)
