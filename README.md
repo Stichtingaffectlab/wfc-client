@@ -102,10 +102,25 @@ crontab -e
 This will open an editor like vim and then enter
 
 ```
-@reboot sleep 60 && /home/robina/code/wfc-client/run-wfc.sh
 1 0 * * * /home/robina/code/wfc-client/run-wfc.sh
 ```
 
 The first entry suggests to start our `run-wfc.sh` script on reboot after waiting for 60 seconds. This allows the system to boot properly and everyting to settle. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
 
-The second script runs every day at 00:01 minute. This creates a new start + log of the day. Healthy to restart the processes now and then to ensure no memory clogging which may happen for unknown reasons when running for long periods.
+And then to start the program on boot:
+
+```sh
+mkdir ~/.config/autostart
+cat <<EOF | tee -a ~/.config/autostart/wfc.desktop
+[Desktop Entry]
+Type=Application
+Exec=sleep 10 && /home/robina/code/wfc-client/run-wfc.sh
+Name=WFC
+EOF
+```
+
+or follow [this guide](https://learn.sparkfun.com/tutorials/how-to-run-a-raspberry-pi-program-on-startup#method-2-autostart)
+
+## Credits
+
+[RobBothof](https://github.com/RobBothof)
