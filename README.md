@@ -93,6 +93,8 @@ bundle exec guard
 
 ## Production
 
+The following are some configurations we use on production raspberry pi machines.
+
 ### Restarts
 
 Set up crontab to perform some tasks like restarting the program.
