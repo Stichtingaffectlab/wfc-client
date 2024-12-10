@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/code/wfc-client
+
 # Ensure tmp directory exists
 mkdir -p tmp
 
