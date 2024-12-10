@@ -93,7 +93,9 @@ bundle exec guard
 
 ## Production
 
-Set up crontab to perform restarts and start the script on boot, you may do this by
+### Restarts
+
+Set up crontab to perform some tasks like restarting the program.
 
 ```sh
 crontab -e
@@ -105,9 +107,11 @@ This will open an editor like vim and then enter
 1 0 * * * /home/robina/code/wfc-client/run-wfc.sh
 ```
 
-The first entry suggests to start our `run-wfc.sh` script on reboot after waiting for 60 seconds. This allows the system to boot properly and everyting to settle. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
+The entry suggests to run tour script `run-wfc.sh` at 00:01 midnight. This ensures new start of the day for logging. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
 
-And then to start the program on boot:
+### Autostart
+
+To start the program on boot:
 
 ```sh
 mkdir ~/.config/autostart
