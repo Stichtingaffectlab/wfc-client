@@ -111,6 +111,66 @@ This will open an editor like vim and then enter
 
 The entry suggests to run tour script `run-wfc.sh` at 00:01 midnight. This ensures new start of the day for logging. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
 
+To make the video player work from crontab, we need to make some small changes to the about `run-wfc.sh` script. This is so that crontab has access to the display server.
+
+You may get the current active display server by
+
+```
+echo $DISPLAY
+```
+
+This should output `:0`
+
+Then add the following at the beginning of `run-wfc.sh`, after the hashbang
+
+```
+export DISPLAY=:0
+export XAUTHORITY=/home/robina/.Xauthority
+```
+
+You should also change the path of `ruby` to it's executable. You can do that by
+
+```
+which ruby
+```
+
+This will output `/home/robina/.rbenv/shims/ruby`.
+
+<details>
+<summary>Final `run-wfc.sh` should look like</summary>
+
+```sh
+#!/bin/bash
+
+export DISPLAY=:0
+export XAUTHORITY=/home/robina/.Xauthority
+
+cd ~/code/wfc-client
+
+# Ensure tmp directory exists
+mkdir -p tmp
+
+./end-wfc.sh
+
+# Generate timestamp in yyyy-mm-dd-hh format
+DATESTAMP=$(date +"%Y-%m-%d")
+
+# Start mpv with logs visible and running in the background
+nohup mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen ./videos/235_ruminations_inside.mp4 >> tmp/mpv-$DATESTAMP.log 2>&1 &
+
+echo "mpv started. Logs are being written to tmp/mpv-$DATESTAMP.log"
+
+# Start the Ruby script with logs visible and running in the background
+nohup /home/robina/.rbenv/shims/ruby main.rb >> tmp/wfc-$DATESTAMP.log 2>&1 &
+
+echo "Ruby script started. Logs are being written to tmp/wfc-$DATESTAMP.log"
+
+# Display information to the user
+echo "Both processes are running in the background."
+```
+</details>
+
+
 ### Autostart
 
 To start the program on boot:
