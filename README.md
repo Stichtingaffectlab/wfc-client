@@ -91,3 +91,21 @@ or you can run the below to watch changes as you develop
 bundle exec guard
 ```
 
+## Production
+
+Set up crontab to perform restarts and start the script on boot, you may do this by
+
+```sh
+crontab -e
+```
+
+This will open an editor like vim and then enter
+
+```
+@reboot sleep 60 && /home/robina/code/wfc-client/run-wfc.sh
+1 0 * * * /home/robina/code/wfc-client/run-wfc.sh
+```
+
+The first entry suggests to start our `run-wfc.sh` script on reboot after waiting for 60 seconds. This allows the system to boot properly and everyting to settle. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
+
+The second script runs every day at 00:01 minute. This creates a new start + log of the day. Healthy to restart the processes now and then to ensure no memory clogging which may happen for unknown reasons when running for long periods.
