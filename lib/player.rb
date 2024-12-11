@@ -4,7 +4,7 @@ require_relative "colored_logger"
 class Player
   MPV_SOCKET = "/tmp/mpvsocket"
   VIDEO_PATH = "./videos" # Directory where video files are stored
-  FILE_EXT = ".mp4"
+  FILE_EXT = ".mov"
 
   def initialize
     @socket = UNIXSocket.new(MPV_SOCKET) # Store the socket connection
@@ -79,6 +79,7 @@ class Player
   end
 
   def filepath(filename)
-    File.join(VIDEO_PATH, filename + FILE_EXT)
+    file_ext = filename.include?(".") ? "" : FILE_EXT
+    File.join(VIDEO_PATH, filename + file_ext)
   end
 end

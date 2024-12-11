@@ -30,11 +30,11 @@ bundle install
 Copy videos of the cows in `videos` directory. And make sure they are named in the following way
 
 ```
-235_eating_inside.mp4
-235_eating_outside.mp4
-235_milking_main.mp4
-235_ruminations_inside.mp4
-235_ruminations_outside.mp4
+235_eating_inside.mov
+235_eating_outside.mov
+235_milking_main.mov
+235_ruminations_inside.mov
+235_ruminations_outside.mov
 cows_go_inside.mp4
 cows_go_outside.mp4
 ```
@@ -191,7 +191,19 @@ You may run the below command to ensure the validity of the autostart file
 desktop-file-validate ~/.config/autostart/wfc.desktop
 ```
 
-or follow [this guide](https://learn.sparkfun.com/tutorials/how-to-run-a-raspberry-pi-program-on-startup#method-2-autostart)
+### Clean up logs
+
+We are collecting some logs for monitoring the software both mpv player and ruby script. The `tmp/mpv-*.log` files are much heavier than the ruby logging, hence we want to clear those out. For this we have a script which can be added to crontab
+
+```sh
+crontab -e
+```
+
+Enter the path to the script and the time
+
+```
+0 7 * * * /home/robina/code/wfc-client/cleanup-logs.sh
+```
 
 ## Credits
 

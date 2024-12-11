@@ -101,7 +101,7 @@ class Timeline
 
     fetch_schedule
     # Look for any scheduled events at this time
-    scheduled = @farm_schedule.find do |ev|
+    scheduled = @farm_schedule&.find do |ev|
       # @todo outside_at and inside_at are not necessary here because we don't have videos for these
       # These are merely indicators for event_location. However, eats_at can be used for eating event
       # if there's a video for it

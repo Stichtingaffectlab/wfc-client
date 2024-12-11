@@ -11,7 +11,7 @@ mkdir -p tmp
 DATESTAMP=$(date +"%Y-%m-%d")
 
 # Start mpv with logs visible and running in the background
-nohup mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen ./videos/235_ruminations_inside.mp4 >> tmp/mpv-$DATESTAMP.log 2>&1 &
+nohup mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen ./videos/235_ruminations_inside.mov >> tmp/mpv-$DATESTAMP.log 2>&1 &
 
 echo "mpv started. Logs are being written to tmp/mpv-$DATESTAMP.log"
 
