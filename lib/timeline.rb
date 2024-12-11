@@ -1,5 +1,6 @@
 require "httparty"
 require "active_support/all"
+require_relative "colored_logger"
 
 # Creates a timeline of events to be displayed. This class takes care of mixing and prioritizing
 # different farm events mixed with lely apis and finally create a timeline of data as it
@@ -22,6 +23,8 @@ class Timeline
     @all = []
     @event_location = DEFAULT_EVENT_LOCATION
     @event_location_set_at = Time.current
+
+    @logger = ColoredLogger.new($stdout)
 
     fetch_cows
     renew
@@ -174,22 +177,41 @@ class Timeline
     now = Time.current.utc
     from_date = now - 6.hours
     @rumination_events = self.class.get("/api/cow_events?event=ruminations&till_date=#{now}&from_date=#{from_date}").slice(0, @cows.length).map(&:deep_symbolize_keys)
+  rescue SocketError => e
+    @logger.error "Error fetching ruminations: #{e.message}"
+    @rumination_events = offline_rumination_data if !@rumination_events
   end
 
   def fetch_schedule
     @farm_schedule = self.class.get("/api/farm_schedule")["schedule"]&.map(&:deep_symbolize_keys)
+  rescue SocketError => e
+    @logger.error "Error fetching farm schedule: #{e.message}"
+    @farm_schedule = []
   end
 
   def fetch_overrides
     @farm_overrides = self.class.get("/api/farm_events").map(&:deep_symbolize_keys)
+  rescue SocketError => e
+    @logger.error "Error fetching farm overrides: #{e.message}"
+    @farm_overrides = []
   end
 
   def fetch_milking
     @milking_events = self.class.get("/api/cow_events?event=milking").map(&:deep_symbolize_keys)
+  rescue SocketError => e
+    @logger.error "Error fetching milking events: #{e.message}"
+    @milking_events = []
   end
 
   def fetch_cows
     @cows = self.class.get("/api/cows").map(&:deep_symbolize_keys)
+  rescue SocketError => e
+    @logger.error "Error fetching cows: #{e.message}"
+    @cows = [
+      {name: "507 Robina", life_number: "NL 671905073"},
+      {name: "235 Margo", life_number: "NL 657402358"},
+      {name: "468 Aergentina", life_number: "NL 671904683"}
+    ]
   end
 
   def set_inside
@@ -199,4 +221,42 @@ end
 
 def truncate_to_minute(time)
   time.change(sec: 0, usec: 0)
+end
+
+# In case we don't have a network connection when the script starts, the below data
+# is used to build the base timeline
+
+def offline_rumination_data
+  [
+    {
+      id: "offline_3223",
+      event: "ruminations",
+      life_number: "NL 671905073",
+      duration: 54,
+      cow: {
+        name: "507 Robina",
+        life_number: "NL 671905073"
+      }
+    },
+    {
+      id: "offline_3222",
+      event: "ruminations",
+      life_number: "NL 671904683",
+      duration: 54,
+      cow: {
+        name: "468 Aergentina",
+        life_number: "NL 671904683"
+      }
+    },
+    {
+      id: "offline_3221",
+      event: "ruminations",
+      life_number: "NL 657402358",
+      duration: 50,
+      cow: {
+        name: "235 Margo",
+        life_number: "NL 657402358"
+      }
+    }
+  ]
 end
