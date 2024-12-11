@@ -180,7 +180,7 @@ mkdir ~/.config/autostart
 cat <<EOF | tee -a ~/.config/autostart/wfc.desktop
 [Desktop Entry]
 Type=Application
-Exec=/bin/sh -c "sleep 10 && /home/robina/code/wfc-client/run-wfc.sh"
+Exec=/bin/sh -c "sleep 5 && /home/robina/code/wfc-client/run-wfc.sh"
 Name=WFC
 EOF
 ```
