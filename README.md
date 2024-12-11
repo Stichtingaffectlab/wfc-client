@@ -44,7 +44,7 @@ Do the same for the other cows.
 Run the mpv player in background (ntice the `&` at the end)
 
 ```sh
-mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mp4 &
+mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mov &
 ```
 
 Start the script
