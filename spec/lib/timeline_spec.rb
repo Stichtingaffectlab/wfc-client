@@ -82,7 +82,7 @@ describe Timeline do
 
         # travel to the minute milking starts
         # It should be milking now as we truncate to the minute
-        # it "retrieves mulking event" do
+        # it "retrieves milking event" do
         Timecop.travel(t + 2.minutes) # go 2 minutes ahead
         expect(subject.get_current[:event]).to eq("milking")
 
@@ -142,6 +142,9 @@ describe Timeline do
         Timecop.travel(Time.local(2024, 9, 24, 12, 0, 10))
         expect(subject.get_current[:event]).to eq("milking")
         expect(subject.event_location).to eq("inside")
+
+        Timecop.travel(Time.local(2024, 9, 24, 13, 20, 10))
+        expect(subject.get_current[:event]).to eq("milking")
       end
     end
   end
