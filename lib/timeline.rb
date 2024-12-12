@@ -177,35 +177,35 @@ class Timeline
     now = Time.current.utc
     from_date = now - 6.hours
     @rumination_events = self.class.get("/api/cow_events?event=ruminations&till_date=#{now}&from_date=#{from_date}").slice(0, @cows.length).map(&:deep_symbolize_keys)
-  rescue SocketError => e
+  rescue => e
     @logger.error "Error fetching ruminations: #{e.message}"
     @rumination_events = offline_rumination_data if !@rumination_events
   end
 
   def fetch_schedule
     @farm_schedule = self.class.get("/api/farm_schedule")["schedule"]&.map(&:deep_symbolize_keys)
-  rescue SocketError => e
+  rescue => e
     @logger.error "Error fetching farm schedule: #{e.message}"
     @farm_schedule = []
   end
 
   def fetch_overrides
     @farm_overrides = self.class.get("/api/farm_events").map(&:deep_symbolize_keys)
-  rescue SocketError => e
+  rescue => e
     @logger.error "Error fetching farm overrides: #{e.message}"
     @farm_overrides = []
   end
 
   def fetch_milking
     @milking_events = self.class.get("/api/cow_events?event=milking").map(&:deep_symbolize_keys)
-  rescue SocketError => e
+  rescue => e
     @logger.error "Error fetching milking events: #{e.message}"
     @milking_events = []
   end
 
   def fetch_cows
     @cows = self.class.get("/api/cows").map(&:deep_symbolize_keys)
-  rescue SocketError => e
+  rescue => e
     @logger.error "Error fetching cows: #{e.message}"
     @cows = [
       {name: "507 Robina", life_number: "NL 671905073"},
