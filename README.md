@@ -41,7 +41,7 @@ cows_go_outside.mp4
 
 Do the same for the other cows.
 
-Run the mpv player in background (ntice the `&` at the end)
+Run the mpv player in background (notice the `&` at the end)
 
 ```sh
 mpv --input-ipc-server=/tmp/mpvsocket --loop=inf --fullscreen videos/235_ruminations_inside.mov &
@@ -106,10 +106,10 @@ crontab -e
 This will open an editor like vim and then enter
 
 ```
-1 0 * * * /home/robina/code/wfc-client/run-wfc.sh
+0 6,11 * * * /home/robina/code/wfc-client/run-wfc.sh
 ```
 
-The entry suggests to run tour script `run-wfc.sh` at 00:01 midnight. This ensures new start of the day for logging. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
+The entry suggests to run our script `run-wfc.sh` at 6am and 11am. This ensures new start of the day for logging. In the above entry, `robina` is the name of the user, make sure to substitute with appropriate user name.
 
 To make the video player work from crontab, we need to make some small changes to the about `run-wfc.sh` script. This is so that crontab has access to the display server.
 
