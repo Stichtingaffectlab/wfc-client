@@ -8,8 +8,8 @@ require_relative "colored_logger"
 #
 class Timeline
   DEFAULT_EVENT_LOCATION = "inside"
-  PUT_INSIDE_AFTER = 20 # minutes
-  DEFAULT_EVENT_DURATION = 5 # minutes
+  PUT_INSIDE_AFTER = 120 # minutes
+  DEFAULT_EVENT_DURATION = 60 # minutes
   DEFAULT_EVENT_CHECK = 5 # minutes
   include HTTParty
 
